@@ -1,5 +1,6 @@
 <?php
-	
+  
+  // jasthi contributed
   // set the current page; 
   $nav_selected = "ABOUT";
 
