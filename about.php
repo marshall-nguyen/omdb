@@ -1,5 +1,6 @@
 <?php
   
+//Here is my useless comment gj
   // jasthi contributed
   // set the current page; 
   $nav_selected = "ABOUT";
