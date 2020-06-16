@@ -9,8 +9,8 @@
 
  <div class="right-content">
     <div class="container">
-
-      <h3 style = "color: #01B0F1;">Timeline (TO BE DONE LATER)</h3>
+//Marshall testing clone repository.
+      <h3 style = "color: #01B0F1;">Movie's timeline will be displayed here!</h3>
 
     </div>
 </div>
