@@ -1,3 +1,3 @@
 # abasiccomposer
 A Basic Composer (ABC)
-//team elephants ben edit
+//Team Elephants Rock! 
