@@ -41,7 +41,7 @@ CREATE TABLE `list_movies` (
 INSERT INTO `list_movies` (`ID`, `native_name`, `english_name`, `year`) VALUES
 (1, 'native_name', 'english_name', 0000),
 (2, 'Avatar 2', 'Avatar 2', 2020),
-(3, 'Bad Boys for Life', 'Bad Boys for Life', 2018),
+(3, 'Bad Boys for Life', 'Bad Boys for Life', 2017),
 (4, 'Iron Sky: The Coming Race', 'Iron Sky: The Coming Race', 2018),
 (5, 'Mary Shelley', 'Mary Shelley', 2018),
 (6, 'The Other Side of the Wind', 'The Other Side of the Wind', 2018),
