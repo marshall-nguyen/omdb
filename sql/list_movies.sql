@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 26, 2020 at 07:48 AM
+-- Generation Time: Jun 26, 2020 at 04:22 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.3.17
 
@@ -24,70 +24,11 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `actor`
---
-
-CREATE TABLE `actor` (
-  `movie_id` int(11) NOT NULL,
-  `actor_id` int(11) NOT NULL,
-  `first_name` varchar(100) NOT NULL,
-  `last_name` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `actor`
---
-
-INSERT INTO `actor` (`movie_id`, `actor_id`, `first_name`, `last_name`) VALUES
-(1, NULL, 'Dong-seok', 'Ma');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `actress`
---
-
-CREATE TABLE `actress` (
-  `movie_id` int(11) NOT NULL,
-  `actress_id` int(11) NOT NULL,
-  `first_name` varchar(100) NOT NULL,
-  `last_name` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `actress`
---
-
-INSERT INTO `actress` (`movie_id`, `actress_id`, `first_name`, `last_name`) VALUES
-(1, NULL, 'Su-an', 'Kim');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `keywords`
---
-
-CREATE TABLE `keywords` (
-  `movie_id` int(11) NOT NULL,
-  `keyword` varchar(250) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `keywords`
---
-
-INSERT INTO `keywords` (`movie_id`, `keyword`) VALUES
-(1, 'cheerleader legs'),
-(1, 'south korea');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `list_movies`
 --
 
 CREATE TABLE `list_movies` (
-  `movie_id` int(11) NOT NULL,
+  `ID` int(11) NOT NULL,
   `native_name` varchar(250) NOT NULL,
   `english_name` varchar(250) NOT NULL,
   `year` year(4) NOT NULL
@@ -97,17 +38,17 @@ CREATE TABLE `list_movies` (
 -- Dumping data for table `list_movies`
 --
 
-INSERT INTO `list_movies` (`movie_id`, `native_name`, `english_name`, `year`) VALUES
-(1, 'Train To Busan', 'Train To Busan', 2016),
+INSERT INTO `list_movies` (`ID`, `native_name`, `english_name`, `year`) VALUES
+(1, 'native_name', 'english_name', 0000),
 (2, 'Avatar 2', 'Avatar 2', 2020),
-(3, 'Bad Boys for Life', 'Bad Boys for Life', 2018),
+(3, 'Bad Boys for Life', 'Bad Boys for Life', 2017),
 (4, 'Iron Sky: The Coming Race', 'Iron Sky: The Coming Race', 2018),
 (5, 'Mary Shelley', 'Mary Shelley', 2018),
 (6, 'The Other Side of the Wind', 'The Other Side of the Wind', 2018),
 (7, 'Mobile Homes', 'Mobile Homes', 2018),
 (8, 'Pirates of the Caribbean: Dead Men Tell No Tales', 'Pirates of the Caribbean: Dead Men Tell No Tales', 2017),
 (9, 'Justice League', 'Justice League', 2017),
-(10, 'Thor: Ragnarok', 'Thor: Ragnarok', 2017),
+(10, 'Thor: Ragnarok', 'Thor: Ragnarok', 2016),
 (11, 'Guardians of the Galaxy Vol. 2', 'Guardians of the Galaxy Vol. 2', 2017),
 (12, 'The King\'s Daughter', 'The King\'s Daughter', 2017),
 (13, 'Extinction Jurassic Predators 2017', 'Extinction: Nature Has Evolved', 2017),
@@ -1053,7 +994,7 @@ INSERT INTO `list_movies` (`movie_id`, `native_name`, `english_name`, `year`) VA
 (953, 'Level Up', 'Level Up', 2016),
 (954, 'The Girl with All the Gifts', 'The Girl with All the Gifts', 2016),
 (955, 'Abattoir', 'Abattoir', 2016);
-INSERT INTO `list_movies` (`movie_id`, `native_name`, `english_name`, `year`) VALUES
+INSERT INTO `list_movies` (`ID`, `native_name`, `english_name`, `year`) VALUES
 (956, 'All Roads Lead to Rome', 'All Roads Lead to Rome', 2016),
 (957, 'Maigret Sets a Trap', 'Maigret Sets a Trap', 2016),
 (958, 'In-Lawfully Yours', 'In-Lawfully Yours', 2016),
@@ -1100,176 +1041,25 @@ INSERT INTO `list_movies` (`movie_id`, `native_name`, `english_name`, `year`) VA
 (999, 'Barbie: Spy Squad', 'Barbie: Spy Squad', 2016),
 (1000, 'Allied', 'Allied', 2016);
 
--- --------------------------------------------------------
-
---
--- Table structure for table `movie_metadata`
---
-
-CREATE TABLE `movie_metadata` (
-  `movie_id` int(11) NOT NULL,
-  `language` varchar(250) DEFAULT NULL,
-  `country` varchar(250) DEFAULT NULL,
-  `plot` varchar(1500) DEFAULT NULL,
-  `genre` varchar(250) DEFAULT NULL,
-  `trivia` varchar(1000) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `movie_metadata`
---
-
-INSERT INTO `movie_metadata` (`movie_id`, `language`, `country`, `plot`, `genre`, `trivia`) VALUES
-(1, 'KOR', 'KR', 'Korean zombie movie. Go watch it.', 'Thriller', 'Train to Busan (2016) is the sixth highest grossing domestic film of all time in South Korea.');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `mulit_media`
---
-
-CREATE TABLE `mulit_media` (
-  `movie_id` int(11) NOT NULL,
-  `movie_poster` varchar(50) DEFAULT NULL,
-  `photo_stills` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `mulit_media`
---
-
-INSERT INTO `mulit_media` (`movie_id`, `movie_poster`, `photo_stills`) VALUES
-(1, 'Train_to_Busan.jpg', NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `people`
---
-
-CREATE TABLE `people` (
-  `movie_id` int(11) NOT NULL,
-  `director` varchar(150) NOT NULL,
-  `producer` varchar(150) NOT NULL,
-  `music_director` varchar(150) NOT NULL,
-  `lead_actor` varchar(150) NOT NULL,
-  `lead_actress` varchar(150) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `people`
---
-
-INSERT INTO `people` (`movie_id`, `director`, `producer`, `music_director`, `lead_actor`, `lead_actress`) VALUES
-(1, 'Sang-ho Yeon', 'Woo-taek Kim', 'Young-gyu Jang', 'Gong Ji-Chul (Gong Yoo)', 'Yu-mi Jung');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `songs`
---
-
-CREATE TABLE `songs` (
-  `song_id` int(11) NOT NULL,
-  `movie_id` int(11) DEFAULT NULL,
-  `song_title` varchar(250) DEFAULT NULL,
-  `lyrics` varchar(1500) DEFAULT NULL,
-  `playback_singer` varchar(250) DEFAULT NULL,
-  `lyricist` varchar(250) DEFAULT NULL,
-  `audio_link` varchar(1000) DEFAULT NULL,
-  `video_link` varchar(1000) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `songs`
---
-
-INSERT INTO `songs` (`song_id`, `movie_id`, `song_title`, `lyrics`, `playback_singer`, `lyricist`, `audio_link`, `video_link`) VALUES
-(NULL, 1, 'Aloha ʻOe', 'Haʻaheo e ka ua i nā pali	Proudly swept the rain by the cliffs\r\nKe nihi aʻela i ka nahele	As it glided through the trees\r\nE hahai (uhai) ana paha i ka liko	Still following ever the bud\r\nPua ʻāhihi lehua o uka	The ʻāhihi lehua[a] of the vale\r\nHui:	Chorus:\r\nAloha ʻoe, aloha ʻoe	Farewell to thee, farewell to thee\r\nE ke onaona noho i ka lipo	The charming one who dwells in the shaded bowers\r\nOne fond embrace,	One fond embrace,\r\nA hoʻi aʻe au	Ere I depart\r\nUntil we meet again	Until we meet again\r\nʻO ka haliʻa aloha i hiki mai	Sweet memories come back to me\r\nKe hone aʻe nei i	Bringing fresh remembrances\r\nKuʻu manawa	Of the past\r\nʻO ʻoe nō kuʻu ipo aloha	Dearest one, yes, you are mine own\r\nA loko e hana nei	From you, true love shall never depart\r\nTomago:	Refrain:\r\nMaopopo kuʻu ʻike i ka nani	I have seen and watched your loveliness\r\nNā pua rose o Maunawili	The sweet rose of Maunawili\r\nI laila hiaʻai nā manu	And \'tis there the birds of love dwell\r\nMikiʻala i ka nani o ka liko	And sip the honey from your lips\r\nHui	Chorus', NULL, 'Queen Liliʻuokalani', NULL, NULL);
-
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `actor`
---
-ALTER TABLE `actor`
-  ADD PRIMARY KEY (`actor_id`);
-
---
--- Indexes for table `actress`
---
-ALTER TABLE `actress`
-  ADD PRIMARY KEY (`actress_id`);
-
---
 -- Indexes for table `list_movies`
 --
 ALTER TABLE `list_movies`
-  ADD PRIMARY KEY (`movie_id`);
-
---
--- Indexes for table `movie_metadata`
---
-ALTER TABLE `movie_metadata`
-  ADD PRIMARY KEY (`movie_id`);
-
---
--- Indexes for table `mulit_media`
---
-ALTER TABLE `mulit_media`
-  ADD KEY `MovieID` (`movie_id`);
-
---
--- Indexes for table `people`
---
-ALTER TABLE `people`
-  ADD PRIMARY KEY (`movie_id`);
-
---
--- Indexes for table `songs`
---
-ALTER TABLE `songs`
-  ADD PRIMARY KEY (`song_id`);
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `actor`
---
-ALTER TABLE `actor`
-  MODIFY `actor_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `actress`
---
-ALTER TABLE `actress`
-  MODIFY `actress_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `list_movies`
 --
 ALTER TABLE `list_movies`
-  MODIFY `movie_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1001;
-
---
--- AUTO_INCREMENT for table `songs`
---
-ALTER TABLE `songs`
-  MODIFY `song_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `mulit_media`
---
-ALTER TABLE `mulit_media`
-  ADD CONSTRAINT `MovieID` FOREIGN KEY (`movie_id`) REFERENCES `list_movies` (`movie_id`);
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5954;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
