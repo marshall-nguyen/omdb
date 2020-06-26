@@ -48,7 +48,7 @@ INSERT INTO `list_movies` (`ID`, `native_name`, `english_name`, `year`) VALUES
 (7, 'Mobile Homes', 'Mobile Homes', 2018),
 (8, 'Pirates of the Caribbean: Dead Men Tell No Tales', 'Pirates of the Caribbean: Dead Men Tell No Tales', 2017),
 (9, 'Justice League', 'Justice League', 2017),
-(10, 'Thor: Ragnarok', 'Thor: Ragnarok', 2017),
+(10, 'Thor: Ragnarok', 'Thor: Ragnarok', 2016),
 (11, 'Guardians of the Galaxy Vol. 2', 'Guardians of the Galaxy Vol. 2', 2017),
 (12, 'The King\'s Daughter', 'The King\'s Daughter', 2017),
 (13, 'Extinction Jurassic Predators 2017', 'Extinction: Nature Has Evolved', 2017),
