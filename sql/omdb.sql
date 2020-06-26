@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 26, 2020 at 04:22 AM
+-- Generation Time: Jun 26, 2020 at 06:57 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.3.17
 
@@ -24,11 +24,48 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `actor`
+--
+
+CREATE TABLE `actor` (
+  `movie_id` int(11) NOT NULL,
+  `actor_id` int(11) NOT NULL,
+  `first_name` varchar(100) NOT NULL,
+  `last_name` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `actress`
+--
+
+CREATE TABLE `actress` (
+  `movie_id` int(11) NOT NULL,
+  `actress_id` int(11) NOT NULL,
+  `first_name` varchar(100) NOT NULL,
+  `last_name` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `keywords`
+--
+
+CREATE TABLE `keywords` (
+  `movie_id` int(11) NOT NULL,
+  `keyword` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `list_movies`
 --
 
 CREATE TABLE `list_movies` (
-  `ID` int(11) NOT NULL,
+  `movie_id` int(11) NOT NULL,
   `native_name` varchar(250) NOT NULL,
   `english_name` varchar(250) NOT NULL,
   `year` year(4) NOT NULL
@@ -38,17 +75,17 @@ CREATE TABLE `list_movies` (
 -- Dumping data for table `list_movies`
 --
 
-INSERT INTO `list_movies` (`ID`, `native_name`, `english_name`, `year`) VALUES
+INSERT INTO `list_movies` (`movie_id`, `native_name`, `english_name`, `year`) VALUES
 (1, 'native_name', 'english_name', 0000),
 (2, 'Avatar 2', 'Avatar 2', 2020),
-(3, 'Bad Boys for Life', 'Bad Boys for Life', 2017),
+(3, 'Bad Boys for Life', 'Bad Boys for Life', 2018),
 (4, 'Iron Sky: The Coming Race', 'Iron Sky: The Coming Race', 2018),
 (5, 'Mary Shelley', 'Mary Shelley', 2018),
 (6, 'The Other Side of the Wind', 'The Other Side of the Wind', 2018),
 (7, 'Mobile Homes', 'Mobile Homes', 2018),
 (8, 'Pirates of the Caribbean: Dead Men Tell No Tales', 'Pirates of the Caribbean: Dead Men Tell No Tales', 2017),
 (9, 'Justice League', 'Justice League', 2017),
-(10, 'Thor: Ragnarok', 'Thor: Ragnarok', 2016),
+(10, 'Thor: Ragnarok', 'Thor: Ragnarok', 2017),
 (11, 'Guardians of the Galaxy Vol. 2', 'Guardians of the Galaxy Vol. 2', 2017),
 (12, 'The King\'s Daughter', 'The King\'s Daughter', 2017),
 (13, 'Extinction Jurassic Predators 2017', 'Extinction: Nature Has Evolved', 2017),
@@ -993,8 +1030,7 @@ INSERT INTO `list_movies` (`ID`, `native_name`, `english_name`, `year`) VALUES
 (952, 'Iliza Shlesinger: Confirmed Kills', 'Iliza Shlesinger: Confirmed Kills', 2016),
 (953, 'Level Up', 'Level Up', 2016),
 (954, 'The Girl with All the Gifts', 'The Girl with All the Gifts', 2016),
-(955, 'Abattoir', 'Abattoir', 2016);
-INSERT INTO `list_movies` (`ID`, `native_name`, `english_name`, `year`) VALUES
+(955, 'Abattoir', 'Abattoir', 2016),
 (956, 'All Roads Lead to Rome', 'All Roads Lead to Rome', 2016),
 (957, 'Maigret Sets a Trap', 'Maigret Sets a Trap', 2016),
 (958, 'In-Lawfully Yours', 'In-Lawfully Yours', 2016),
@@ -1041,25 +1077,148 @@ INSERT INTO `list_movies` (`ID`, `native_name`, `english_name`, `year`) VALUES
 (999, 'Barbie: Spy Squad', 'Barbie: Spy Squad', 2016),
 (1000, 'Allied', 'Allied', 2016);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `movie_metadata`
+--
+
+CREATE TABLE `movie_metadata` (
+  `movie_id` int(11) NOT NULL,
+  `language` varchar(250) DEFAULT NULL,
+  `country` varchar(250) DEFAULT NULL,
+  `plot` varchar(1500) DEFAULT NULL,
+  `genre` varchar(250) DEFAULT NULL,
+  `trivia` varchar(1000) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mulit_media`
+--
+
+CREATE TABLE `mulit_media` (
+  `movie_id` int(11) NOT NULL,
+  `movie_poster` varchar(50) DEFAULT NULL,
+  `photo_stills` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `people`
+--
+
+CREATE TABLE `people` (
+  `movie_id` int(11) NOT NULL,
+  `director` varchar(150) NOT NULL,
+  `producer` varchar(150) NOT NULL,
+  `music_director` varchar(150) NOT NULL,
+  `lead_actor` varchar(150) NOT NULL,
+  `lead_actress` varchar(150) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `songs`
+--
+
+CREATE TABLE `songs` (
+  `song_id` int(11) NOT NULL,
+  `movie_id` int(11) DEFAULT NULL,
+  `song_title` varchar(250) DEFAULT NULL,
+  `lyrics` varchar(1500) DEFAULT NULL,
+  `playback_singer` varchar(250) DEFAULT NULL,
+  `lyricist` varchar(250) DEFAULT NULL,
+  `audio_link` varchar(1000) DEFAULT NULL,
+  `video_link` varchar(1000) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 --
 -- Indexes for dumped tables
 --
 
 --
+-- Indexes for table `actor`
+--
+ALTER TABLE `actor`
+  ADD PRIMARY KEY (`actor_id`);
+
+--
+-- Indexes for table `actress`
+--
+ALTER TABLE `actress`
+  ADD PRIMARY KEY (`actress_id`);
+
+--
 -- Indexes for table `list_movies`
 --
 ALTER TABLE `list_movies`
-  ADD PRIMARY KEY (`ID`);
+  ADD PRIMARY KEY (`movie_id`);
+
+--
+-- Indexes for table `movie_metadata`
+--
+ALTER TABLE `movie_metadata`
+  ADD PRIMARY KEY (`movie_id`);
+
+--
+-- Indexes for table `mulit_media`
+--
+ALTER TABLE `mulit_media`
+  ADD KEY `MovieID` (`movie_id`);
+
+--
+-- Indexes for table `people`
+--
+ALTER TABLE `people`
+  ADD PRIMARY KEY (`movie_id`);
+
+--
+-- Indexes for table `songs`
+--
+ALTER TABLE `songs`
+  ADD PRIMARY KEY (`song_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
+-- AUTO_INCREMENT for table `actor`
+--
+ALTER TABLE `actor`
+  MODIFY `actor_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `actress`
+--
+ALTER TABLE `actress`
+  MODIFY `actress_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `list_movies`
 --
 ALTER TABLE `list_movies`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5954;
+  MODIFY `movie_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1001;
+
+--
+-- AUTO_INCREMENT for table `songs`
+--
+ALTER TABLE `songs`
+  MODIFY `song_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `mulit_media`
+--
+ALTER TABLE `mulit_media`
+  ADD CONSTRAINT `MovieID` FOREIGN KEY (`movie_id`) REFERENCES `list_movies` (`movie_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
