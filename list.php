@@ -62,7 +62,7 @@ $query = "SELECT list_movies.*, people.director, people.producer, people.music_d
 			      GROUP_CONCAT(keyword SEPARATOR ', ') AS keyword_list
 			      FROM keywords GROUP BY movie_id) AS keywords_list
             ON list_movies.movie_id = keywords_list.movie_id
-          INNER JOIN mulit_media
+          LEFT JOIN mulit_media
             ON list_movies.movie_id = mulit_media.movie_id";
 //list
 $GLOBALS['data'] = mysqli_query($db, $query);
