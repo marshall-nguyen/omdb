@@ -1,9 +1,9 @@
 <div id="menu-left">
 
-<a href="scanner_releases.php">
-  	<div <?php if($left_selected == "RELEASES")
+<a href="movies_list.php">
+  	<div <?php if($left_selected == "Movies List")
   	{ echo 'class="menu-left-current-page"'; } ?>>
   	<img src="./images/releases.png">
-  	<br/>Releases<br/></div>
+  	<br/>Movies List<br/></div>
   </a>
 </div>

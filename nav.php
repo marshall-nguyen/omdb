@@ -33,10 +33,10 @@
               <br/>Team Elephants</li>
             </a>
 
-            <a href="Scanner.php">
-              <li <?php if($nav_selected == "SCANNER"){ echo 'class="current-page"'; } ?>>
-                <img src="./images/movie_elephant.png">
-                <br/>Movie</li>
+            <a href="list.php">
+              <li <?php if($nav_selected == "LIST"){ echo 'class="current-page"'; } ?>>
+                <img src="./images/list.png">
+                <br/>Movies List</li>
             </a>
 
             <a href="People.php">
@@ -63,7 +63,25 @@
                 <br/>Help</li>
             </a>
 
-        
+            <?php  //Check if they are logged out show correct login or logout function
+
+            if (isset($_SESSION['logged_in'])){
+
+            echo '<a href="logout.php">
+            <li>
+             <img src="./images/logout.png">
+            <br/>Logout</li>
+            </a>';
+                    
+              
+          }else{
+          echo' <a href="loginform.php">
+          <li>
+            <img src="./images/login.png">
+            <br/>Login</li>
+            </a> ';
+          }
+          ?>
 
       </ul>
       <br />

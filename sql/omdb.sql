@@ -39,7 +39,11 @@ CREATE TABLE `actor` (
 --
 
 INSERT INTO `actor` (`movie_id`, `actor_id`, `first_name`, `last_name`) VALUES
-(1, NULL, 'Dong-seok', 'Ma');
+(1, 1, 'Dong-seok', 'Ma'),
+(62, 2, 'Daniel', 'Kaluuya'),
+(19, 3, 'John Michael', 'Higgins'),
+(971, 4, 'Ben', 'Foster'),
+(1001, 5, 'Matt', 'Damon');
 
 -- --------------------------------------------------------
 
@@ -59,7 +63,12 @@ CREATE TABLE `actress` (
 --
 
 INSERT INTO `actress` (`movie_id`, `actress_id`, `first_name`, `last_name`) VALUES
-(1, NULL, 'Su-an', 'Kim');
+(1, 1, 'Su-an', 'Kim'),
+(62, 2, 'Allison', 'Williams'),
+(19, 3, 'Anna', 'Kendrick'),
+(971, 4, 'Kristin', 'Berg'),
+(1001, 5, 'Kate', 'Winslet'),
+(1001, 6, 'Jude ', 'Law');
 
 -- --------------------------------------------------------
 
@@ -78,7 +87,22 @@ CREATE TABLE `keywords` (
 
 INSERT INTO `keywords` (`movie_id`, `keyword`) VALUES
 (1, 'cheerleader legs'),
-(1, 'south korea');
+(1, 'south korea'),
+(62, 'Horror'),
+(19, 'Singing'),
+(971, 'texas'),
+(971, 'bank robber'),
+(971, 'brother brother relationship'),
+(971, 'armed robbery'),
+(971, 'bank robbery'),
+(1001, 'virus'),
+(1001, 'contagion'),
+(1001, 'infection'),
+(1001, 'outbreak'),
+(1001, 'epidemic'),
+(1001, 'outbreak'),
+(1001, 'cure');
+
 
 -- --------------------------------------------------------
 
@@ -1098,7 +1122,8 @@ INSERT INTO `list_movies` (`movie_id`, `native_name`, `english_name`, `year`) VA
 (997, 'Vincent N Roxxy', 'Vincent N Roxxy', 2016),
 (998, 'Brother Nature', 'Brother Nature', 2016),
 (999, 'Barbie: Spy Squad', 'Barbie: Spy Squad', 2016),
-(1000, 'Allied', 'Allied', 2016);
+(1000, 'Allied', 'Allied', 2016),
+(1001, 'Contagion', 'Contagion', 2011);
 
 -- --------------------------------------------------------
 
@@ -1120,8 +1145,11 @@ CREATE TABLE `movie_metadata` (
 --
 
 INSERT INTO `movie_metadata` (`movie_id`, `language`, `country`, `plot`, `genre`, `trivia`) VALUES
-(1, 'KOR', 'KR', 'Korean zombie movie. Go watch it.', 'Thriller', 'Train to Busan (2016) is the sixth highest grossing domestic film of all time in South Korea.');
-
+(1, 'KOR', 'KR', 'Korean zombie movie. Go watch it.', 'Thriller', 'Train to Busan (2016) is the sixth highest grossing domestic film of all time in South Korea.'),
+(62, 'ENG', 'US', 'Chris and his girlfriend Rose go upstate to visit her parents for the weekend. At first, Chris reads the family\'s overly accommodating behavior as nervous attempts to deal with their daughter\'s interracial relationship, but as the weekend progresses, a series of increasingly disturbing discoveries lead him to a truth that he never could have imagined.', ' \'Mystery\',\'Thriller\',\'Horror\'', 'Chance the Rapper was so impressed by the movie that he bought all of the movie tickets from certain Chicago movie theaters just so people could go see the film for free. In one of his tweets talking about the film, he says, \"Just pull up with an ID and enjoy the movie.\"'),
+(19, 'ENG', 'US', 'Following their win at the world championship, the now separated Bellas reunite for one last singing competition at an overseas USO tour, but face a group who uses both instruments and voices.', 'Musical', 'During the shots of passports, Lilly\'s states her place of birth as Area 51, Nevada.'),
+(971, 'ENG', 'US', 'A divorced father and his ex-con older brother resort to a desperate scheme in order to save their family\'s ranch in West Texas.', 'Action', 'The phrase \"come hell or high water\" typically means \"do whatever needs to be done, no matter the circumstances\". It also refers to the \"hell or high water clause\" in a contract, usually a lease, which states that the payments must continue regardless of any difficulties the paying party may encounter. Both definitions apply to different parts of the plot in this movie.\r\n'),
+(1001, 'ENG', 'US', 'the wife returns from HongKong to Minnesota, she carries with her a virus and soon it becomes a global pandemic', 'thriller/drama', 'This movie\'s fictional MEV-1 virus is composed of bat and pig viral strains. Coincidentally, at the end of the film, a sample of this MEV-1 virus is stored with samples of H1N1 (which originated in pigs) and SARS (believed to have originated in bats). Kate Winslet filmed her role in 10 days.');
 -- --------------------------------------------------------
 
 --
@@ -1139,7 +1167,10 @@ CREATE TABLE `mulit_media` (
 --
 
 INSERT INTO `mulit_media` (`movie_id`, `movie_poster`, `photo_stills`) VALUES
-(1, 'Train_to_Busan.jpg', NULL);
+(1, 'Train_to_Busan.jpg', NULL),
+(62, '/1SwAVYpuLj8KsHxllTF8Dt9dSSX.jpg', NULL),
+(971, '/6YOrNBdoXvT8aC5VPLkkN6t5z0V.jpg', NULL),
+(1001, 'rb.gy/v21usc', 'https://www.imdb.com/title/tt1598778/mediaindex');
 
 -- --------------------------------------------------------
 
@@ -1161,8 +1192,11 @@ CREATE TABLE `people` (
 --
 
 INSERT INTO `people` (`movie_id`, `director`, `producer`, `music_director`, `lead_actor`, `lead_actress`) VALUES
-(1, 'Sang-ho Yeon', 'Woo-taek Kim', 'Young-gyu Jang', 'Gong Ji-Chul (Gong Yoo)', 'Yu-mi Jung');
-
+(1, 'Sang-ho Yeon', 'Woo-taek Kim', 'Young-gyu Jang', 'Gong Ji-Chul (Gong Yoo)', 'Yu-mi Jung'),
+(62, 'Jordan Peele', 'Jason Blum', 'Michael Abels', 'Daniel Kaluuya', 'Allison Williams'),
+(19, 'Trish Sie', 'Jason Moore', 'Julia Michels', 'John Lithgow', 'Anna Kendrick'),
+(971, 'David Mackenzie', 'Braden Aftergood', 'Nick Cave', 'Ben Foster', 'Dale Dickey'),
+(1001, 'Steven Soderbergh', 'Gregory Jacobs', 'Cliff Martinez', 'Matt Damon', 'Kate Winslet');
 -- --------------------------------------------------------
 
 --
@@ -1185,7 +1219,12 @@ CREATE TABLE `songs` (
 --
 
 INSERT INTO `songs` (`song_id`, `movie_id`, `song_title`, `lyrics`, `playback_singer`, `lyricist`, `audio_link`, `video_link`) VALUES
-(NULL, 1, 'Aloha ʻOe', 'Haʻaheo e ka ua i nā pali	Proudly swept the rain by the cliffs\r\nKe nihi aʻela i ka nahele	As it glided through the trees\r\nE hahai (uhai) ana paha i ka liko	Still following ever the bud\r\nPua ʻāhihi lehua o uka	The ʻāhihi lehua[a] of the vale\r\nHui:	Chorus:\r\nAloha ʻoe, aloha ʻoe	Farewell to thee, farewell to thee\r\nE ke onaona noho i ka lipo	The charming one who dwells in the shaded bowers\r\nOne fond embrace,	One fond embrace,\r\nA hoʻi aʻe au	Ere I depart\r\nUntil we meet again	Until we meet again\r\nʻO ka haliʻa aloha i hiki mai	Sweet memories come back to me\r\nKe hone aʻe nei i	Bringing fresh remembrances\r\nKuʻu manawa	Of the past\r\nʻO ʻoe nō kuʻu ipo aloha	Dearest one, yes, you are mine own\r\nA loko e hana nei	From you, true love shall never depart\r\nTomago:	Refrain:\r\nMaopopo kuʻu ʻike i ka nani	I have seen and watched your loveliness\r\nNā pua rose o Maunawili	The sweet rose of Maunawili\r\nI laila hiaʻai nā manu	And \'tis there the birds of love dwell\r\nMikiʻala i ka nani o ka liko	And sip the honey from your lips\r\nHui	Chorus', NULL, 'Queen Liliʻuokalani', NULL, NULL);
+(1, 1, 'Aloha ʻOe', 'Haʻaheo e ka ua i nā pali	Proudly swept the rain by the cliffs\r\nKe nihi aʻela i ka nahele	As it glided through the trees\r\nE hahai (uhai) ana paha i ka liko	Still following ever the bud\r\nPua ʻāhihi lehua o uka	The ʻāhihi lehua[a] of the vale\r\nHui:	Chorus:\r\nAloha ʻoe, aloha ʻoe	Farewell to thee, farewell to thee\r\nE ke onaona noho i ka lipo	The charming one who dwells in the shaded bowers\r\nOne fond embrace,	One fond embrace,\r\nA hoʻi aʻe au	Ere I depart\r\nUntil we meet again	Until we meet again\r\nʻO ka haliʻa aloha i hiki mai	Sweet memories come back to me\r\nKe hone aʻe nei i	Bringing fresh remembrances\r\nKuʻu manawa	Of the past\r\nʻO ʻoe nō kuʻu ipo aloha	Dearest one, yes, you are mine own\r\nA loko e hana nei	From you, true love shall never depart\r\nTomago:	Refrain:\r\nMaopopo kuʻu ʻike i ka nani	I have seen and watched your loveliness\r\nNā pua rose o Maunawili	The sweet rose of Maunawili\r\nI laila hiaʻai nā manu	And \'tis there the birds of love dwell\r\nMikiʻala i ka nani o ka liko	And sip the honey from your lips\r\nHui	Chorus', NULL, 'Queen Liliʻuokalani', NULL, NULL),
+(2, 62, 'Redbone', 'Daylight\r\nI wake up feeling like you won\'t play right\r\nI used to know, but now that shit don\'t feel right\r\nIt made me put away my pride\r\nSo long\r\nYou made a nigga wait for some, so long\r\nYou make it hard for boy like that to go on\r\nI\'m wishing I could make this mine, oh\r\nIf you want it, yeah\r\nYou can have it, oh, oh, oh\r\nIf you need it, ooh\r\nWe can make it, oh\r\nIf you want it\r\nYou can have it\r\nBut stay woke\r\nNiggas creepin\'\r\nThey gon\' find you\r\nGon\' catch you sleepin\' (oh)\r\nNow stay woke\r\nNiggas creepin\'\r\nNow don\'t you close your eyes\r\nToo late\r\nYou wanna make it right, but now it\'s too late\r\nMy peanut butter chocolate cake with Kool-Aid\r\nI\'m trying not to waste my time\r\nIf you want it, oh\r\nYou can have it (you can have it)\r\nIf you need it (you better believe in something)\r\nWe can make it, oh\r\nIf you want it\r\nYou can have it, ah!\r\nBut stay woke (stay woke)\r\nNiggas creepin\' (they be creepin\')\r\nThey gon\' find you (they gon\' find you)\r\nGon\' catch you sleepin\' (gon\' catch you sleepin\', put your hands up on me)\r\nNow stay woke\r\nNiggas creepin\'\r\nNow don\'t you close your eyes\r\nBut stay woke (ooh, ah)\r\nNiggas creepin\'\r\nThey gon\' find you (they gon\' find you)\r\nGon\' catch you sleepin\' (gon\' catch you, gon\' catch you, ooh)\r\nNow stay woke\r\nNiggas creepin\'\r\nNow don\'t you close your eyes\r\nHow\'d it get so scandalous?\r\nOh, how\'d it get so scandalous?\r\nOh, oh, how\'d it get, how\'d it get\r\nHow\'d it get so scandalous?\r\nHow\'d it get so scandalous?\r\nHow\'d it get so scandalous?\r\nBut stay woke\r\nBut stay woke', NULL, 'Childish Gambino', 'https://www.youtube.com/watch?v=Kp7eSUU9oy8', 'https://www.youtube.com/watch?v=Kp7eSUU9oy8'),
+(3, 19, 'Toxic', 'Baby, can\'t you see\r\nI\'m calling\r\nA guy like you should wear a warning\r\nIt\'s dangerous\r\nI\'m falling\r\nThere\'s no escape\r\nI can\'t wait\r\nI need a hit\r\nBaby, give me it\r\nYou\'re dangerous\r\nI\'m loving it\r\nToo high\r\nCan\'t come down\r\nLosin\' my head\r\nSpinnin\' \'round and \'round\r\nDo you feel me now?\r\nOh,\r\nThe taste of your lips\r\nI\'m on a ride\r\nYou\'re toxic I\'m slippin\' under\r\nWith a taste of a poison paradise\r\nI\'m addicted to you\r\nDon\'t you know that you\'re toxic?\r\nAnd I love what you do\r\nDon\'t you know that you\'re toxic?\r\nIt\'s getting late\r\nTo give you up\r\nI took a sip\r\nFrom my devil\'s cup\r\nSlowly, it\'s taking over me\r\nToo high\r\nCan\'t come down\r\nIt\'s in the air and it\'s all around\r\nCan you feel me now?\r\nOh,\r\nTaste of your lips\r\nI\'m on a ride\r\nYou\'re toxic I\'m slippin\' under\r\nWith the taste of a poison paradise\r\nI\'m addicted to you\r\nDon\'t you know that you\'re toxic?\r\nAnd I love what you do\r\nDon\'t you know that you\'re toxic?\r\nDon\'t you know that you\'re toxic?\r\nTaste of your lips\r\nI\'m on a ride\r\nYou\'re toxic I\'m slippin\' under\r\nWith a taste of a poison paradise\r\nI\'m addicted to you\r\nDon\'t you know that you\'re toxic?\r\nWith the taste of your lips\r\nI\'m on a ride\r\nYou\'re toxic I\'m slippin\' under\r\nWith a taste of the poison paradise\r\nI\'m addicted to you\r\nDon\'t you know that you\'re toxic?\r\nIntoxicate me now\r\nWith your lovin\' now\r\nI think I\'m ready now\r\nI think I\'m ready now\r\nIntoxicate me now\r\nWith your lovin\' now\r\nI think I\'m ready no', NULL, 'Cathy Dennis', NULL, 'https://www.youtube.com/watch?v=LOZuxwVk7TU'),
+(4, 971, ' 1. Comancheria\r\n  2. Dollar Bill Blues\r\n  3. Mama\'s Room\r\n  4. Dust of the Chase\r\n  5. Texas Midlands\r\n  6. Robbery\r\n  7. You Ask Me To\r\n  8. Mountain Lion Mean\r\n  9. Sleeping On The Blacktop\r\n  10. From My Cold Dead Hands\r\n  11. Lord of the Plains\r', 'If I had a dollar bill\r\nYes, I believe, I surely will\r\nGo to town and drink my fill\r\nEarly in the morning\r\n\r\nLittle darling, she\'s a red-haired thing\r\nMan, she makes my legs to sing\r\nGoing to buy her a diamond ring\r\nEarly in the morning\r\nMother was a golden girl\r\nI slit her throat just to get her pearls\r\nCast myself into a whirl\r\nBefore a bunch of swine\r\nIt\'s a long way down the Harlan Road\r\nBusted back and a heavy load\r\nWon\'t get through to save my soul\r\nEarly in the morning\r\nI\'ve always been a gambling man\r\nI\'ve rolled them bones with either hand\r\nSeven is the promised land\r\nEarly in the morning\r\nWhiskey\'d be my dying bed\r\nTell me where to lay my head\r\nNot with me is all she said\r\nEarly in the morning', 'Nick Cave Warren Ellis', 'Nick Cave Warren Ellis', 'https://genius.com/Nick-cave-and-warren-ellis-comancheria-lyrics', 'https://www.youtube.com/watch?v=t1aVMl9LLsw'),
+(5, 1001, 'All I want is you', 'You say you want\r\nDiamonds on a ring of gold\r\nYou say you want\r\nYour story to remain untold\r\nBut all the promises we make\r\nFrom the cradle to the grave\r\nWhen all I want is you\r\nYou say you\'ll give me\r\nA highway with no one on it\r\nTreasure just to look upon it\r\nAll the riches in the night\r\nYou say you\'ll give me\r\nEyes in a moon of blindness\r\nA river in a time of dryness\r\nA harbor in the tempest\r\nBut all the promises we make\r\nFrom the cradle to the grave\r\nWhen all I want is you\r\nYou say you want\r\nYour love to work out right\r\nTo last with me through the night\r\nYou say you want\r\nDiamonds on a ring of gold\r\nYour story to remain untold\r\nYour love not to grow cold\r\nAll the promises we break\r\nFrom the cradle to the grave\r\nWhen all I want is you\r\nYou all I want is\r\nYou all I want is\r\nYou all I want is\r\nYou', 'U2', 'U2', 'https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiSlO7E6Z_qAhVGCM0KHam0ChoQwqsBMAJ6BAgLEAQ&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DKgJj13ZbbzY&usg=AOvVaw2wxwg9PXclOjhZu0K-bdCC', 'https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiSlO7E6Z_qAhVGCM0KHam0ChoQwqsBMAJ6BAgLEAQ&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DKgJj13ZbbzY&usg=AOvVaw2wxwg9PXclOjhZu0K-bdCC'),
+(6, 1001, 'Amante del Vino', 'N/A', 'Michael J Thomas', 'N/A', 'spotify:track:0zSZuKDSNAMJMVqvD2h3Y7', 'https://www.what-song.com/Movies/Soundtrack/858/Contagion#');
 
 --
 -- Indexes for dumped tables
@@ -1241,13 +1280,13 @@ ALTER TABLE `songs`
 -- AUTO_INCREMENT for table `actor`
 --
 ALTER TABLE `actor`
-  MODIFY `actor_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `actor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `actress`
 --
 ALTER TABLE `actress`
-  MODIFY `actress_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `actress_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `list_movies`
@@ -1259,7 +1298,7 @@ ALTER TABLE `list_movies`
 -- AUTO_INCREMENT for table `songs`
 --
 ALTER TABLE `songs`
-  MODIFY `song_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `song_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
