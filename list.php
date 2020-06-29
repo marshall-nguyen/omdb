@@ -168,7 +168,7 @@ $GLOBALS['data'] = mysqli_query($db, $query);
 		<a class="showHideColumn" data-columnindex="3">Year</a> -
 		<a class="showHideColumn" data-columnindex="4">Director</a> -
 		<a class="showHideColumn" data-columnindex="5">Producer</a> -
-    <a class="showHideColumn" data-columnindex="6">Lead Actor</a> -
+        <a class="showHideColumn" data-columnindex="6">Lead Actor</a> -
 		<a class="showHideColumn" data-columnindex="7">Lead Actress</a> -
 		<a class="showHideColumn" data-columnindex="8">Key Words</a> -
 		<a class="showHideColumn" data-columnindex="9">Poster</a>
@@ -205,8 +205,8 @@ $GLOBALS['data'] = mysqli_query($db, $query);
                     <td><div contenteditable="true" onBlur="updateValue(this,'Poster','<?php echo $Movie_ID; ?>')"><?php echo $Poster; ?></div></span> </td>
                     <td><div contenteditable="true" onBlur="updateValue(this,'Native Name','<?php echo $Movie_ID; ?>')"><?php echo $Native_Name; ?></div></span> </td>
                     <?php echo '<td><img src="images/'.$row["Image"].'" style="width:100px;height:120px;">' ?>
-                    <?php echo '<td><a class="btn btn-warning btn-sm" href="modifyDish.php?id='.$row["Movie ID"].'">Modify</a></td>' ?>
-                    <?php echo '<td><a class="btn btn-danger btn-sm" href="deleteDish.php?id='.$row["Movie ID"].'">Delete</a></td>' ?>
+                    <?php echo '<td><a class="btn btn-warning btn-sm" href="modifyDish.php?id='.$row["movie_id"].'">Modify</a></td>' ?>
+                    <?php echo '<td><a class="btn btn-danger btn-sm" href="deleteDish.php?id='.$row["movie_id"].'">Delete</a></td>' ?>
                 </tr>
 
                         <?php
