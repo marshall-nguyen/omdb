@@ -202,8 +202,6 @@ $GLOBALS['data'] = mysqli_query($db, $query);
                     <td><div contenteditable="true" onBlur="updateValue(this,'Lead Actor','<?php echo $Movie_ID; ?>')"><?php echo $Lead_Actor; ?></div></span> </td>
                     <td><div contenteditable="true" onBlur="updateValue(this,'Lead Actress','<?php echo $Movie_ID; ?>')"><?php echo $Lead_Actress; ?></div></span> </td>
                     <td><div contenteditable="true" onBlur="updateValue(this,'Key Words','<?php echo $Movie_ID; ?>')"><?php echo $Key_Words; ?></div></span> </td>
-                    <td><div contenteditable="true" onBlur="updateValue(this,'Poster','<?php echo $Movie_ID; ?>')"><?php echo $Poster; ?></div></span> </td>
-                    <td><div contenteditable="true" onBlur="updateValue(this,'Native Name','<?php echo $Movie_ID; ?>')"><?php echo $Native_Name; ?></div></span> </td>
                     <?php echo '<td><img src="images/'.$row["Image"].'" style="width:100px;height:120px;">' ?>
                     <?php echo '<td><a class="btn btn-warning btn-sm" href="modifyDish.php?id='.$row["movie_id"].'">Modify</a></td>' ?>
                     <?php echo '<td><a class="btn btn-danger btn-sm" href="deleteDish.php?id='.$row["movie_id"].'">Delete</a></td>' ?>
