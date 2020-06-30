@@ -54,28 +54,46 @@
 require 'functions.php';
 require 'db_configuration.php';
 
-$query = "SELECT list_movies.*, people.director, people.producer, people.music_director, people.lead_actor, people.lead_actress, keywords_list.keyword_list, mulit_media.movie_poster
-          FROM list_movies 
-          INNER JOIN people
-            ON list_movies.movie_id = people.movie_id
-          INNER JOIN (SELECT keywords.*,
-			      GROUP_CONCAT(keyword SEPARATOR ', ') AS keyword_list
-			      FROM keywords GROUP BY movie_id) AS keywords_list
-            ON list_movies.movie_id = keywords_list.movie_id
-          LEFT JOIN mulit_media
-            ON list_movies.movie_id = mulit_media.movie_id";
+$query = "SELECT movies.*, movie_data.language, movie_data.country, movie_data.genre, movie_data.plot, people_list.screen_name, people_list.role, _
+          people_list.image_name, keywords_list.keyword_list, trivia_list.trivia_cat, movie_media.m_link_type, movie_media.m_link
+          FROM movies
+	          INNER JOIN movie_data
+    	      ON movies.movie_id = movie_data.movie_id
+	
+            INNER JOIN (SELECT movie_people.movie_id, people.screen_name, movie_people.role, people.image_name
+                        FROM movie_people
+                          LEFT JOIN people
+                          ON movie_people.people_id = people.people_id) AS people_list
+            ON movies.movie_id = people_list.movie_id
+
+            INNER JOIN (SELECT movie_keywords.*,
+              GROUP_CONCAT(keyword SEPARATOR ', ') AS keyword_list
+              FROM movie_keywords GROUP BY movie_id) AS keywords_list
+            ON movies.movie_id = keywords_list.movie_id
+        
+	          INNER JOIN (SELECT movie_trivia.*,
+              GROUP_CONCAT(trivia SEPARATOR ', ') AS trivia_cat
+              FROM movie_trivia GROUP BY movie_id) AS trivia_list
+            ON movies.movie_id = trivia_list.movie_id
+        
+            INNER JOIN movie_media
+            ON movies.movie_id = movie_media.movie_id";
+            
 //list
 $GLOBALS['data'] = mysqli_query($db, $query);
 // $GLOBALS['movie_id'] = mysqli_query($db, $query);
 // $GLOBALS['native_name'] = mysqli_query($db, $query);
 // $GLOBALS['english_name'] = mysqli_query($db, $query);
-// $GLOBALS['year'] = mysqli_query($db, $query);
-// $GLOBALS['director'] = mysqli_query($db, $query);
-// $GLOBALS['producer'] = mysqli_query($db, $query);
-// $GLOBALS['lead_actor'] = mysqli_query($db, $query);
-// $GLOBALS['lead_actress'] = mysqli_query($db, $query);
+// $GLOBALS['year_made'] = mysqli_query($db, $query);
+// $GLOBALS['genre'] = mysqli_query($db, $query);
+// $GLOBALS['plot'] = mysqli_query($db, $query);
+// $GLOBALS['screen_name'] = mysqli_query($db, $query);
+// $GLOBALS['role'] = mysqli_query($db, $query);
+// $GLOBALS['image_name'] = mysqli_query($db, $query);
 // $GLOBALS['keyword_list'] = mysqli_query($db, $query);
-// $GLOBALS['movie_poster'] = mysqli_query($db, $query);
+// $GLOBALS['trivia_cat'] = mysqli_query($db, $query);
+// $GLOBALS['m_link_type'] = mysqli_query($db, $query);
+// $GLOBALS['m_link'] = mysqli_query($db, $query);
   include("./nav.php");
   
 ?>
@@ -180,13 +198,13 @@ $GLOBALS['data'] = mysqli_query($db, $query);
                     $Movie_ID = $row["movie_id"];
                     $Native_Name = $row["native_name"];
                     $English_Name = $row["english_name"];
-                    $Year = $row["year"];
-                    $Director = $row["director"];
-                    $Producer = $row["producer"];
-                    $Lead_Actor = $row["lead_actor"];
-                    $Lead_Actress = $row["lead_actress"];
+                    $Year = $row["year_made"];
+                    $Director = $row["screen_name"];
+                    $Producer = $row["screen_name"];
+                    $Lead_Actor = $row["screen_name"];
+                    $Lead_Actress = $row["screen_name"];
                     $Key_Words = $row["keyword_list"];
-                    $Poster = $row["movie_poster"];
+                    $Poster = $row["m_link"];
                 
                     if(isset($_SESSION['role'])) { //logged in, allow in cell editing
                         ?>
