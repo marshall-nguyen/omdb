@@ -34,7 +34,7 @@
 <body>
 <div class="container">
 <?php
-include('header.php');
+$left_buttons = "NO";
 include_once 'db_configuration.php';
 
 if (isset($_GET['fav_status'])) {
@@ -94,7 +94,7 @@ $GLOBALS['data'] = mysqli_query($db, $query);
 
 if (isset($_GET['movie_id'])) {
 
-    $id = mysqli_real_escape_string($db, $_GET['movie_id']);
+    $id = mysqli_real_escape_string($db, $_GET['id']);
     $sql = "SELECT * FROM `data` WHERE movie_id = " . $id;
     $GLOBALS['row_data'] = mysqli_query($db, $sql);
 } 
@@ -105,22 +105,22 @@ else if(isset($_GET['native_name'])) {
     $GLOBALS['row_data'] = mysqli_query($db, $sql);
 }
 
-if ($row_data->num_rows > 0) {
+//if ($row_data->num_rows > 0) {
     // fetch row_data from $_Globals
-    while($row = $row_data->fetch_assoc()) {
-      print( '<h2 class= "head">'.$row["native_name"]. '</h2>');
-      echo("<image class = 'image' src = images/".$row["m_link"]. "></image>");    
-      print( '<h3 class= "title"> Plot: </h3><p class= "words" >'.$row["plot"]. '</p>
-              <h3 class= "title"> Trivia? </h3><p class= "words">' .$row["trivia_cat"]. '</p>
-              <h3 class= "title"> Genre: </h3><p class= "words">' .$row["genre"]. '</p>
-              <h3 class= "title"> Cast: </h3><p class= "words">' .$row["screen_name"]. '</p>
-              <h3 class= "title"> Key Words: </h3><p class= "words">' .$row["keyword_list"]. '</p>
-              <h3 class= "title"> Year Made: </h3><p class= "words">' .$row["year_made"]. '</p>
-              <h3 class= "title"> Media: </h3><p class= "words">' .$row["m_link"]. '</p>' );
-    }
-} else {
-  print('no data');
-}
+    //while($row = $row_data->fetch_assoc()) {
+      //print( '<h2 class= "head">'.$row["native_name"]. '</h2>');
+      //echo("<image class = 'image' src = images/".$row["m_link"]. "></image>");    
+      //print( '<h3 class= "title"> Plot: </h3><p class= "words" >'.$row["plot"]. '</p>
+              //<h3 class= "title"> Trivia? </h3><p class= "words">' .$row["trivia_cat"]. '</p>
+              //<h3 class= "title"> Genre: </h3><p class= "words">' .$row["genre"]. '</p>
+              //<h3 class= "title"> Cast: </h3><p class= "words">' .$row["screen_name"]. '</p>
+              //<h3 class= "title"> Key Words: </h3><p class= "words">' .$row["keyword_list"]. '</p>
+              //<h3 class= "title"> Year Made: </h3><p class= "words">' .$row["year_made"]. '</p>
+              //<h3 class= "title"> Media: </h3><p class= "words">' .$row["m_link"]. '</p>' );
+    ///}
+//} else {
+  //print('no data');
+//}
 
 ?>
 </div>

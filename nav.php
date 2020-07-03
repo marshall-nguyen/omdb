@@ -17,7 +17,7 @@
         <!-- Latest compiled JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="styles/custom_nav.css" type="text/css">
-        <title>A Basic Composer</title>
+        <title>Elephant's Movie Database</title>
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/css/dataTables.bootstrap.min.css" rel="stylesheet"/>
         <link rel="stylesheet" href="./mainStyleSheet.css">
@@ -39,18 +39,18 @@
                 <br/>Movies List</li>
             </a>
 
-            <a href="People.php">
+            <a href="people.php">
               <li <?php if($nav_selected == "TIMELINE"){ echo 'class="current-page"'; } ?>>
               <img src="./images/reports_one_to_none.png">
               <br/>People</li>
             </a>
 
-            <a href="Songs.php">
+            <a href="songs.php">
               <li <?php if($nav_selected == "SONGS"){ echo 'class="current-page"'; } ?>>
                 <img src="./images/music.png">
                 <br/>Songs</li>
 
-            <a href="Reports.php">
+            <a href="reports.php">
               <li <?php if($nav_selected == "REPORTS"){ echo 'class="current-page"'; } ?>>
               <img src="./images/reports.png">
               <br/>Reports</li>
@@ -73,7 +73,6 @@
             <br/>Logout</li>
             </a>';
                     
-              
           }else{
           echo' <a href="loginform.php">
           <li>
