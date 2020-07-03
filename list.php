@@ -54,29 +54,34 @@
 require 'functions.php';
 require 'db_configuration.php';
 
-$query = "SELECT movies.*, movie_data.language, movie_data.country, movie_data.genre, movie_data.plot, people_list.screen_name, people_list.role, people_list.image_name, keywords_list.keyword_list, trivia_list.trivia_cat, movie_media.m_link_type, movie_media.m_link
-        FROM movies
-        INNER JOIN movie_data
-        ON movies.movie_id = movie_data.movie_id
+$query = "SELECT movies.*, movie_data.language, movie_data.country, movie_data.genre, movie_data.plot, cast_list.cast, keywords_list.keyword_list, trivia_list.trivia_cat, movie_media.m_link_type, movie_media.m_link
+FROM movies
+LEFT JOIN movie_data
+ON movies.movie_id = movie_data.movie_id
 
-         JOIN (SELECT movie_people.movie_id, people.screen_name, movie_people.role, people.image_name
-                FROM movie_people
-                LEFT JOIN people
-                ON movie_people.people_id = people.people_id) AS people_list
-        ON movies.movie_id = people_list.movie_id
+LEFT JOIN (SELECT people_list.*,
+         GROUP_CONCAT(
+            CONCAT_WS(' - ', role, screen_name)
+            SEPARATOR '; ') AS cast
+        FROM (SELECT movie_people.movie_id, people.screen_name, movie_people.role, people.image_name
+            FROM movie_people
+            LEFT JOIN people
+            ON movie_people.people_id = people.people_id) AS people_list) AS cast_list
+ON movies.movie_id = cast_list.movie_id
 
-        INNER JOIN (SELECT movie_keywords.*,
-            GROUP_CONCAT(keyword SEPARATOR ', ') AS keyword_list
-            FROM movie_keywords GROUP BY movie_id) AS keywords_list
-        ON movies.movie_id = keywords_list.movie_id
+LEFT JOIN (SELECT movie_keywords.*,
+    GROUP_CONCAT(keyword SEPARATOR ', ') AS keyword_list
+    FROM movie_keywords GROUP BY movie_id) AS keywords_list
+ON movies.movie_id = keywords_list.movie_id
 
-        INNER JOIN (SELECT movie_trivia.*,
-            GROUP_CONCAT(trivia SEPARATOR ', ') AS trivia_cat
-            FROM movie_trivia GROUP BY movie_id) AS trivia_list
-        ON movies.movie_id = trivia_list.movie_id
+LEFT JOIN (SELECT movie_trivia.*,
+    GROUP_CONCAT(trivia SEPARATOR ', ') AS trivia_cat
+    FROM movie_trivia GROUP BY movie_id) AS trivia_list
+ON movies.movie_id = trivia_list.movie_id
 
-        INNER JOIN movie_media
-        ON movies.movie_id = movie_media.movie_id";
+LEFT JOIN movie_media
+ON movies.movie_id = movie_media.movie_id
+WHERE movie_media.m_link_type = 'poster'";
             
 //list
 $GLOBALS['data'] = mysqli_query($db, $query);
@@ -86,8 +91,7 @@ $GLOBALS['data'] = mysqli_query($db, $query);
 // $GLOBALS['year_made'] = mysqli_query($db, $query);
 // $GLOBALS['genre'] = mysqli_query($db, $query);
 // $GLOBALS['plot'] = mysqli_query($db, $query);
-// $GLOBALS['screen_name'] = mysqli_query($db, $query);
-// $GLOBALS['role'] = mysqli_query($db, $query);
+// $GLOBALS['cast'] = mysqli_query($db, $query);
 // $GLOBALS['image_name'] = mysqli_query($db, $query);
 // $GLOBALS['keyword_list'] = mysqli_query($db, $query);
 // $GLOBALS['trivia_cat'] = mysqli_query($db, $query);
@@ -164,10 +168,7 @@ $GLOBALS['data'] = mysqli_query($db, $query);
                     <th>Native Name</th>
                     <th>English Name</th>
                     <th>Year</th>
-                    <th>Director</th>
-                    <th>Producer</th>
-                    <th>Lead Actor</th>
-                    <th>Lead Actress</th>
+                    <th>Cast</th>
                     <th>Key Words</th>                
                     <th>Poster</th>
                     <th>Modify</th>
@@ -183,12 +184,9 @@ $GLOBALS['data'] = mysqli_query($db, $query);
 		<a class="showHideColumn" data-columnindex="1">Native Name</a> -
 		<a class="showHideColumn" data-columnindex="2">English Name</a> -
 		<a class="showHideColumn" data-columnindex="3">Year</a> -
-		<a class="showHideColumn" data-columnindex="4">Director</a> -
-		<a class="showHideColumn" data-columnindex="5">Producer</a> -
-        <a class="showHideColumn" data-columnindex="6">Lead Actor</a> -
-		<a class="showHideColumn" data-columnindex="7">Lead Actress</a> -
-		<a class="showHideColumn" data-columnindex="8">Key Words</a> -
-		<a class="showHideColumn" data-columnindex="9">Poster</a>
+		<a class="showHideColumn" data-columnindex="4">Cast</a> -
+		<a class="showHideColumn" data-columnindex="5">Key Words</a> -
+		<a class="showHideColumn" data-columnindex="6">Poster</a>
 	</div>
 	<!-- Add show/hide column -->	
     
@@ -198,10 +196,7 @@ $GLOBALS['data'] = mysqli_query($db, $query);
                     $Native_Name = $row["native_name"];
                     $English_Name = $row["english_name"];
                     $Year = $row["year_made"];
-                    $Director = $row["screen_name"];
-                    $Producer = $row["screen_name"];
-                    $Lead_Actor = $row["screen_name"];
-                    $Lead_Actress = $row["screen_name"];
+                    $Cast = $row["cast"];
                     $Key_Words = $row["keyword_list"];
                     $Poster = $row["m_link"];
                 
@@ -212,10 +207,7 @@ $GLOBALS['data'] = mysqli_query($db, $query);
                     <td><div contenteditable="true" onBlur="updateValue(this,'native_name','<?php echo $Movie_ID; ?>')"><?php echo $Native_Name; ?></div></span> </td>
                     <td><div contenteditable="true" onBlur="updateValue(this,'english_name','<?php echo $Movie_ID; ?>')"><?php echo $English_Name; ?></div></span> </td>
                     <td><div contenteditable="true" onBlur="updateValue(this,'year','<?php echo $Movie_ID; ?>')"><?php echo $Year; ?></div></span> </td>
-                    <td><div contenteditable="true" onBlur="updateValue(this,'director','<?php echo $Movie_ID; ?>')"><?php echo $Director; ?></div></span> </td>
-                    <td><div contenteditable="true" onBlur="updateValue(this,'producer','<?php echo $Movie_ID; ?>')"><?php echo $Producer; ?></div></span> </td>
-                    <td><div contenteditable="true" onBlur="updateValue(this,'lead_actor','<?php echo $Movie_ID; ?>')"><?php echo $Lead_Actor; ?></div></span> </td>
-                    <td><div contenteditable="true" onBlur="updateValue(this,'lead_actress','<?php echo $Movie_ID; ?>')"><?php echo $Lead_Actress; ?></div></span> </td>
+                    <td><div contenteditable="true" onBlur="updateValue(this,'cast','<?php echo $Movie_ID; ?>')"><?php echo $Cast; ?></div></span> </td>
                     <td><div contenteditable="true" onBlur="updateValue(this,'keyword_list','<?php echo $Movie_ID; ?>')"><?php echo $Key_Words; ?></div></span> </td>
                     <?php echo '<td><img src="images/'.$row["m_link"].'" style="width:100px;height:120px;">' ?>
                     <?php echo '<td><a class="btn btn-warning btn-sm" href="modifyDish.php?id='.$row["movie_id"].'">Modify</a></td>' ?>
@@ -230,10 +222,7 @@ $GLOBALS['data'] = mysqli_query($db, $query);
                     <td><div><?php echo $Native_Name; ?></div></span> </td>
                     <td><div><?php echo $English_Name; ?></div></span> </td>
                     <td><div><?php echo $Year; ?></div></span> </td>
-                    <td><div><?php echo $Director; ?></div></span> </td>
-                    <td><div><?php echo $Producer; ?></div></span> </td>
-                    <td><div><?php echo $Lead_Actor; ?></div></span> </td>
-                    <td><div><?php echo $Lead_Actress; ?></div></span> </td>
+                    <td><div><?php echo $Cast; ?></div></span> </td>
                     <td><div><?php echo $Key_Words; ?></div></span> </td>
                     <?php echo '<td><img src="images/'.$row["m_link"].'" style="width:100px;height:120px;">' ?>
                     <?php echo '<td><a class="btn btn-warning btn-sm" href="modifyDish.php?id='.$row["movie_id"].'">Modify</a></td>' ?>
