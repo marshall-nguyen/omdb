@@ -294,10 +294,55 @@ image_name
   <div class="container">
     <h3 style="color: #01B0F1;">[B.1] Movie -> People</h3>
 
-    <?php
+    <table class="display" id="movie_people_table" style="width:100%">
+      <div class="table responsive">
 
-    //TODO: 
-    ?>
+        <thead>
+          <tr>
+            <th> Role </th>
+            <th> Screen Name</th>
+            <th> First Name</th>
+            <th> Middle Name</th>
+            <th> Last Name</th>
+            <th> Image Name</th>
+          </tr>
+        </thead>
+
+        <?php
+
+        // query string for the Query B.1
+        $sql_B1 = "SELECT movie_people.movie_id, movie_people.role, people.screen_name, people.first_name, people.middle_name, people.last_name, people.image_name
+        FROM movie_people
+        LEFT JOIN people
+        ON movie_people.people_id = people.people_id
+        WHERE movie_people.movie_id =" . $movie_id;
+
+        if (!$sql_B1_result = $db->query($sql_B1)) {
+          die('There was an error running query[' . $connection->error . ']');
+        }
+
+        // this is 1 to many relationship
+        // So, many tuples may be returned
+        // We will display those in a table in a while loop
+        if ($sql_B1_result->num_rows > 0) {
+          // output data of each row
+          while ($b1_tuple = $sql_B1_result->fetch_assoc()) {
+            echo '<tr>
+                      <td>' . $b1_tuple["role"] . '</td>
+                      <td>' . $b1_tuple["screen_name"] . '</td>
+                      <td>' . $b1_tuple["first_name"] . '</td>
+                      <td>' . $b1_tuple["middle_name"] . ' </span> </td>
+                      <td>' . $b1_tuple["last_name"] . ' </span> </td>
+                      <td>' . $b1_tuple["image_name"] . ' </span> </td>
+                  </tr>';
+          } //end while
+
+        } //end second if 
+
+        $sql_B1_result->close();
+        ?>
+
+    </table>
   </div>
 </div>
 
@@ -318,10 +363,70 @@ media (from songs_media - show the IDs as comma separated list, media_link will 
   <div class="container">
     <h3 style="color: #01B0F1;">[C.1] Movie -> Songs</h3>
 
-    <?php
+    <table class="display" id="movie_song_table" style="width:100%">
+      <div class="table responsive">
 
-    //TODO: 
-    ?>
+        <thead>
+          <tr>
+            <th> Title </th>
+            <th> Lyrics</th>
+            <th> Screen Name</th>
+            <th> Role</th>
+            <th> Keywords</th>
+            <th> Media</th>
+          </tr>
+        </thead>
+
+        <?php
+
+        // query string for the Query C.1
+        $sql_C1 = "SELECT movie_song.movie_id, songs.title, songs.lyrics, people.screen_name, song_people.role, keywords_list.keyword_list, song_media.s_link
+        FROM movie_song
+        
+        LEFT JOIN songs
+        ON movie_song.song_id = songs.song_id
+        
+        LEFT JOIN song_people
+        ON movie_song.song_id = song_people.song_id
+        
+        LEFT JOIN people
+        ON song_people.people_id = people.people_id
+        
+        LEFT JOIN song_media
+        ON songs.song_id = song_media.song_id
+        
+        LEFT JOIN (SELECT song_keywords.* ,
+                    GROUP_CONCAT(keyword SEPARATOR ', ') AS keyword_list
+                    FROM song_keywords GROUP BY song_id) AS keywords_list
+                ON songs.song_id = keywords_list.song_id
+        WHERE movie_song.movie_id =" . $movie_id;
+
+        if (!$sql_C1_result = $db->query($sql_C1)) {
+          die('There was an error running query[' . $connection->error . ']');
+        }
+
+        // this is 1 to many relationship
+        // So, many tuples may be returned
+        // We will display those in a table in a while loop
+        if ($sql_C1_result->num_rows > 0) {
+          // output data of each row
+          while ($c1_tuple = $sql_C1_result->fetch_assoc()) {
+            echo '<tr>
+                      <td>' . $c1_tuple["title"] . '</td>
+                      <td>' . $c1_tuple["lyrics"] . '</td>
+                      <td>' . $c1_tuple["screen_name"] . '</td>
+                      <td>' . $c1_tuple["role"] . ' </span> </td>
+                      <td>' . $c1_tuple["keyword_list"] . ' </span> </td>
+                      <td>' . $c1_tuple["s_link"] . ' </span> </td>
+                  </tr>';
+          } //end while
+
+        } //end second if 
+
+        $sql_C1_result->close();
+        ?>
+
+    </table>
   </div>
 </div>
 
