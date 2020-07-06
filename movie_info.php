@@ -151,17 +151,17 @@ TODO: Copy the code snippet from A.1, change the code to reflect Extended data
     <?php
 
     // query string for the Query A.1
-    $sql_A2 = "SELECT movie_id, language, country, genre, plot 
-          FROM movie_data
-          INNER JOIN movies ON movies.movie_id = movie_data.movie_id
-          WHERE movie_data.movie_id =" . $movie_id;
+    $sql_A2 = "SELECT movie_data.movie_id, language, country, genre, plot 
+              FROM movie_data
+              INNER JOIN movies ON movies.movie_id = movie_data.movie_id
+              WHERE movie_data.movie_id =" . $movie_id;
 
     if (!$sql_A2_result = $db->query($sql_A2)) {
       die('There was an error running query[' . $connection->error . ']');
 }
 
     if ($sql_A2_result->num_rows > 0) {
-      $a2_tuple = $sql_A1_result->fetch_assoc();
+      $a2_tuple = $sql_A2_result->fetch_assoc();
       echo '<br> Language : ' . $a2_tuple["language"] .
       '<br> Country : ' . $a2_tuple["country"] .
       '<br> Genre : ' . $a2_tuple["genre"] .
