@@ -37,6 +37,11 @@
 //$sql = "SELECT * from movies ORDER BY year_made ASC;";
 // BUild a SQL query "SELECT year_made, COUNT(native_name) AS movie_count from movies ORDER by year_made DSC"
 
+$sql = "SELECT movies.year_made, COUNT(native_name) AS movie_count
+        FROM movies
+        GROUP BY year_made
+        ORDER BY year_made DESC";
+
 $result = $db->query($sql);
 
                 if ($result->num_rows > 0) {
