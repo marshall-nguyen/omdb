@@ -1,128 +1,355 @@
-<html>
+<?php
+$nav_selected = "MOVIES";
+$left_buttons = "YES";
+$left_selected = "NO";
+
+include("./nav.php");
+require 'bin/functions.php';
+require 'db_configuration.php';
+global $db;
+?>
+
+<!-- =====================================================================================================
+
+This page displays the information from all 12 tables.
+The input is "movie_id". 
+This "movie_id" is passed to movie_info.php as a URL parameter.
+
+This pages displays the movie information in three sections.
+
+[A] MOVIE 
+[B] PEOPLE
+[C] SONGS
+
+The above three sections are outlined below
+
+[A]  MOVIE Details
+
+[A.1] Basic Data  (table: movies)
+Display Type: Name - value pairs
+
+id
+native_name 
+english_name 
+year_made 
+
+[A.2] Extended Data (table: movie_data)
+Display Type: Name - value pairs
+
+language
+country
+genre
+plot
+
+[A.3] Movie Media (table: movie_media)
+Display Type: Show this as a table
+
+m_media_id
+m_link  (preferable to display the media on the page)
+m_link_type
+
+[A.4] Movie Key Words (table: movie_keywords)
+Display Type: Name - value pairs
+
+keywords (show it as a comma separated list) 
+
+
+[B] PEOPLE Details
+
+[B.1] People  (table: movie_people and people)  
+Display Type: Show this as a table
+
+role 
+screen_name
+first_name
+middle_name
+last_name 
+image_name (prefereable to display the image on the page)
+
+[C] SONGS Details
+
+[C.1] Songs (table: movie_song, songs, song_media, song_people, song_keywords)
+Display Type: Show this as a table
+
+title 
+lyrics
+screen name (from people)
+role (from song_people)
+keywords (from song_keywords, show this info as comma separated list
+media (from songs_media - show the IDs as comma separated list, media_link will be a hyper link)
+
+===================================================================================================== -->
+
+<!-- ========== Getting the movie id =====================================
+// This is the movie_id coming to this page as GET parameter
+// We will fetch it and save it as $movie_id to be used in our queries
+======================================================================== -->
+<?php
+if (isset($_GET['movie_id'])) {
+  $movie_id = mysqli_real_escape_string($db, $_GET['movie_id']);
+}
+?>
+
+
+<!-- ================ [A.1] Basic Data (table: movies) ======================
+Display Type: Name - value pairs
+
+movie_id
+native_name 
+english_name 
+year_made
+========================================================================= -->
+
+<div class="right-content">
+  <div class="container">
+    <h3 style="color: #01B0F1;">[A.1] Movies -> Basic Data</h3>
+
+    <?php
+
+
+    // query string for the Query A.1
+    $sql_A1 = "SELECT movie_id, native_name, english_name, year_made 
+              FROM movies
+              WHERE movie_id =" . $movie_id;
+
+    if (!$sql_A1_result = $db->query($sql_A1)) {
+      die('There was an error running query[' . $connection->error . ']');
+    }
+
+    if ($sql_A1_result->num_rows > 0) {
+      $a1_tuple = $sql_A1_result->fetch_assoc();
+      echo '<br> Movie ID : ' . $a1_tuple["movie_id"] .
+        '<br> Native Name : ' . $a1_tuple["native_name"] .
+        '<br> English Name : ' . $a1_tuple["english_name"] .
+        '<br> Year Made :  ' . $a1_tuple["year_made"];
+    } //end if
+    else {
+      echo "0 results";
+    } //end else
+
+    $sql_A1_result->close();
+    ?>
+  </div>
+</div>
+
+
+
+<!-- ================ [A.2] Extended Data (table: movie_data) ======================
+Display Type: Name - value pairs
+
+language
+country
+genre
+plot
+
+TODO: Copy the code snippet from A.1, change the code to reflect Extended data
+========================================================================= -->
+<div class="right-content">
+  <div class="container">
+    <h3 style="color: #01B0F1;">[A.2] Movies -> Extended Data</h3>
+
+    <?php
+
+    // query string for the Query A.1
+    $sql_A2 = "SELECT movie_id, language, country, genre, plot 
+          FROM movie_data
+          INNER JOIN movies ON movies.movie_id = movie_data.movie_id
+          WHERE movie_data.movie_id =" . $movie_id;
+
+    if (!$sql_A2_result = $db->query($sql_A2)) {
+      die('There was an error running query[' . $connection->error . ']');
+}
+
+    if ($sql_A2_result->num_rows > 0) {
+      $a2_tuple = $sql_A1_result->fetch_assoc();
+      echo '<br> Language : ' . $a2_tuple["language"] .
+      '<br> Country : ' . $a2_tuple["country"] .
+      '<br> Genre : ' . $a2_tuple["genre"] .
+      '<br> Plot :  ' . $a2_tuple["plot"];
+} //end if
+else {
+  echo "0 results";
+} //end else
+
+$sql_A2_result->close();
+?>
+
+  </div>
+</div>
+
+
+<!-- ================ [A.3] Movie Media (table: movie_media) ======================
+Display Type: Show this as a table
+
+m_media_id
+m_link  (preferable to display the media on the page)
+m_link_type
+========================================================================= -->
+
+<div class="right-content">
+  <div class="container">
+    <h3 style="color: #01B0F1;">[A.3] Movie -> Media</h3>
+
+
+    <table class="display" id="movie_media_table" style="width:100%">
+      <div class="table responsive">
+
+        <thead>
+          <tr>
+            <th> Movie ID </th>
+            <th> Media Id</th>
+            <th> Media Link</th>
+            <th> Link Type</th>
+          </tr>
+        </thead>
+
+        <?php
+
+        // query string for the Query A.1
+        $sql_A3 = "SELECT movie_id, movie_media_id, m_link, m_link_type 
+              FROM movie_media
+              WHERE movie_id =" . $movie_id;
+
+        if (!$sql_A3_result = $db->query($sql_A3)) {
+          die('There was an error running query[' . $connection->error . ']');
+        }
+
+        // this is 1 to many relationship
+        // So, many tuples may be returned
+        // We will display those in a table in a while loop
+        if ($sql_A3_result->num_rows > 0) {
+          // output data of each row
+          while ($a3_tuple = $sql_A3_result->fetch_assoc()) {
+            echo '<tr>
+                      <td>' . $a3_tuple["movie_id"] . '</td>
+                      <td>' . $a3_tuple["movie_media_id"] . '</td>
+                      <td>' . $a3_tuple["m_link"] . '</td>
+                      <td>' . $a3_tuple["m_link_type"] . ' </span> </td>
+                  </tr>';
+          } //end while
+
+        } //end second if 
+
+        $sql_A3_result->close();
+        ?>
+
+    </table>
+  </div>
+</div>
+
+
+
+
+
+<!-- ================ [A.4] Movie Key Words (table: movie_keywords) ======================
+Display Type: Name - value pairs
+
+keywords (show it as a comma separated list) 
+========================================================================= -->
+
+<div class="right-content">
+  <div class="container">
+    <h3 style="color: #01B0F1;">[A.4] Movie -> Key Words</h3>
+
+    <?php
+
+    //TODO: 
+    ?>
+  </div>
+</div>
+
+
+
+
+<!-- ================ [B.1] People  (table: movie_people and people)   ======================
+Display Type: Show this as a table
+
+role 
+screen_name
+first_name
+middle_name
+last_name 
+image_name  
+========================================================================= -->
+
+<div class="right-content">
+  <div class="container">
+    <h3 style="color: #01B0F1;">[B.1] Movie -> People</h3>
+
+    <?php
+
+    //TODO: 
+    ?>
+  </div>
+</div>
+
+
+
+<!-- ================ [C.1] Songs (table: movie_song, songs, song_media, song_people, song_keywords)   ======================
+Display Type: Show this as a table
+
+title 
+lyrics
+screen name (from people)
+role (from song_people)
+keywords (from song_keywords, show this info as comma separated list
+media (from songs_media - show the IDs as comma separated list, media_link will be a hyper link)
+========================================================================= -->
+
+<div class="right-content">
+  <div class="container">
+    <h3 style="color: #01B0F1;">[C.1] Movie -> Songs</h3>
+
+    <?php
+
+    //TODO: 
+    ?>
+  </div>
+</div>
+
+
+<!-- ================== JQuery Data Table script ================================= -->
+
+<script type="text/javascript" language="javascript">
+  $(document).ready(function() {
+
+    $('#info').DataTable({
+      dom: 'lfrtBip',
+      buttons: [
+        'copy', 'excel', 'csv', 'pdf'
+      ]
+    });
+
+    $('#info thead tr').clone(true).appendTo('#info thead');
+    $('#info thead tr:eq(1) th').each(function(i) {
+      var title = $(this).text();
+      $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+
+      $('input', this).on('keyup change', function() {
+        if (table.column(i).search() !== this.value) {
+          table
+            .column(i)
+            .search(this.value)
+            .draw();
+        }
+      });
+    });
+
+    var table = $('#info').DataTable({
+      orderCellsTop: true,
+      fixedHeader: true,
+      retrieve: true
+    });
+
+  });
+</script>
+
+
 
 <style>
-.head {
-  font-family: "Times New Roman";
-  color: darkgoldenrod;
-  text-align: center;
-}
-
-.title {
-  font-family: "Times New Roman";
-  color: rgb(0,200,55);
-  font-size: 1.5rem;
-}
-
-.words{
-  font-family: "Times New Roman";
-}
-
-.container {
-    width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-}
-
-.image {
-    height: 300px;
-    padding: 8px 8px 8px 8px;
-}
+  tfoot {
+    display: table-header-group;
+  }
 </style>
 
-<body>
-<div class="container">
-<?php
-$left_buttons = "NO";
-include_once 'db_configuration.php';
-
-if (isset($_GET['fav_status'])) {
-
-  $fav_status = mysqli_real_escape_string($db, $_GET['fav_status']);
-  if ($fav_status == "COOKIE_NOT_FOUND")
-  {
-    echo "Cookie Not Found. Using the system's default";
-  }
-  if ($fav_status == "DRESS_NOT_FOUND")
-  {
-    echo "Dress Not Found. Using the system's default";
-  }
-}
-
-$query = "SELECT movies.*, movie_data.language, movie_data.country, movie_data.genre, movie_data.plot, people_list.screen_name, people_list.role, _
-          people_list.image_name, keywords_list.keyword_list, trivia_list.trivia_cat, movie_media.m_link_type, movie_media.m_link
-          FROM movies
-	          INNER JOIN movie_data
-    	      ON movies.movie_id = movie_data.movie_id
-	
-            INNER JOIN (SELECT movie_people.movie_id, people.screen_name, movie_people.role, people.image_name
-                        FROM movie_people
-                          LEFT JOIN people
-                          ON movie_people.people_id = people.people_id) AS people_list
-            ON movies.movie_id = people_list.movie_id
-
-            INNER JOIN (SELECT movie_keywords.*,
-              GROUP_CONCAT(keyword SEPARATOR ', ') AS keyword_list
-              FROM movie_keywords GROUP BY movie_id) AS keywords_list
-            ON movies.movie_id = keywords_list.movie_id
-        
-	          INNER JOIN (SELECT movie_trivia.*,
-              GROUP_CONCAT(trivia SEPARATOR ', ') AS trivia_cat
-              FROM movie_trivia GROUP BY movie_id) AS trivia_list
-            ON movies.movie_id = trivia_list.movie_id
-        
-            INNER JOIN movie_media
-            ON movies.movie_id = movie_media.movie_id";
-            
-//list
-$GLOBALS['data'] = mysqli_query($db, $query);
-// $GLOBALS['movie_id'] = mysqli_query($db, $query);
-// $GLOBALS['native_name'] = mysqli_query($db, $query);
-// $GLOBALS['english_name'] = mysqli_query($db, $query);
-// $GLOBALS['year_made'] = mysqli_query($db, $query);
-// $GLOBALS['genre'] = mysqli_query($db, $query);
-// $GLOBALS['plot'] = mysqli_query($db, $query);
-// $GLOBALS['screen_name'] = mysqli_query($db, $query);
-// $GLOBALS['role'] = mysqli_query($db, $query);
-// $GLOBALS['image_name'] = mysqli_query($db, $query);
-// $GLOBALS['keyword_list'] = mysqli_query($db, $query);
-// $GLOBALS['trivia_cat'] = mysqli_query($db, $query);
-// $GLOBALS['m_link_type'] = mysqli_query($db, $query);
-// $GLOBALS['m_link'] = mysqli_query($db, $query);
-  include("./nav.php");
-
-if (isset($_GET['movie_id'])) {
-
-    $id = mysqli_real_escape_string($db, $_GET['id']);
-    $sql = "SELECT * FROM `data` WHERE movie_id = " . $id;
-    $GLOBALS['row_data'] = mysqli_query($db, $sql);
-} 
-else if(isset($_GET['native_name'])) {
-
-    $name = mysqli_real_escape_string($db, $_GET['native_name']);
-    $sql = "SELECT * FROM `data` WHERE native_name = '" . $name ."'";
-    $GLOBALS['row_data'] = mysqli_query($db, $sql);
-}
-
-//if ($row_data->num_rows > 0) {
-    // fetch row_data from $_Globals
-    //while($row = $row_data->fetch_assoc()) {
-      //print( '<h2 class= "head">'.$row["native_name"]. '</h2>');
-      //echo("<image class = 'image' src = images/".$row["m_link"]. "></image>");    
-      //print( '<h3 class= "title"> Plot: </h3><p class= "words" >'.$row["plot"]. '</p>
-              //<h3 class= "title"> Trivia? </h3><p class= "words">' .$row["trivia_cat"]. '</p>
-              //<h3 class= "title"> Genre: </h3><p class= "words">' .$row["genre"]. '</p>
-              //<h3 class= "title"> Cast: </h3><p class= "words">' .$row["screen_name"]. '</p>
-              //<h3 class= "title"> Key Words: </h3><p class= "words">' .$row["keyword_list"]. '</p>
-              //<h3 class= "title"> Year Made: </h3><p class= "words">' .$row["year_made"]. '</p>
-              //<h3 class= "title"> Media: </h3><p class= "words">' .$row["m_link"]. '</p>' );
-    ///}
-//} else {
-  //print('no data');
-//}
-
-?>
-</div>
-</body>
-</html>
+<?php include("./footer.php"); ?>
