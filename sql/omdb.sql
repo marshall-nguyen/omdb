@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 26, 2020 at 07:48 AM
+-- Generation Time: Jul 06, 2020 at 04:59 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.3.17
 
@@ -24,1153 +24,200 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `actor`
+-- Table structure for table `movies`
 --
 
-CREATE TABLE `actor` (
-  `movie_id` int(11) NOT NULL,
-  `actor_id` int(11) NOT NULL,
-  `first_name` varchar(100) NOT NULL,
-  `last_name` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `movies` (
+  `movie_id` int(6) NOT NULL,
+  `native_name` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `english_name` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `year_made` year(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `actor`
+-- Dumping data for table `movies`
 --
 
-INSERT INTO `actor` (`movie_id`, `actor_id`, `first_name`, `last_name`) VALUES
-(1, 1, 'Dong-seok', 'Ma'),
-(62, 2, 'Daniel', 'Kaluuya'),
-(19, 3, 'John Michael', 'Higgins'),
-(971, 4, 'Ben', 'Foster'),
-(1001, 5, 'Matt', 'Damon');
+INSERT INTO `movies` (`movie_id`, `native_name`, `english_name`, `year_made`) VALUES
+(1, 'Joker', 'Joker', 2019),
+(2, 'Get Out', 'Get Out', 2017),
+(3, 'Pitch Perfect 3', 'Pitch Perfect 3', 2017),
+(4, 'Hell or High Water', 'Hell or High Water', 2016),
+(5, 'Contagion', 'Contagion', 2011);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `actress`
+-- Table structure for table `movie_data`
 --
 
-CREATE TABLE `actress` (
-  `movie_id` int(11) NOT NULL,
-  `actress_id` int(11) NOT NULL,
-  `first_name` varchar(100) NOT NULL,
-  `last_name` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `movie_data` (
+  `movie_id` int(6) NOT NULL COMMENT 'This is both PK and FK; movie_data is a WEAK entity',
+  `language` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `country` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `genre` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `plot` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `actress`
+-- Dumping data for table `movie_data`
 --
 
-INSERT INTO `actress` (`movie_id`, `actress_id`, `first_name`, `last_name`) VALUES
-(1, 1, 'Su-an', 'Kim'),
-(62, 2, 'Allison', 'Williams'),
-(19, 3, 'Anna', 'Kendrick'),
-(971, 4, 'Kristin', 'Berg'),
-(1001, 5, 'Kate', 'Winslet'),
-(1001, 6, 'Jude ', 'Law');
+INSERT INTO `movie_data` (`movie_id`, `language`, `country`, `genre`, `plot`) VALUES
+(1, 'ENG', 'US', 'Thriller', 'In Gotham City, mentally troubled comedian Arthur Fleck is disregarded and mistreated by society. He then embarks on a downward spiral of revolution and bloody crime. This path brings him face-to-face with his alter-ego: the Joker.'),
+(2, 'ENG', 'US', 'Horror', 'Chris and his girlfriend Rose go upstate to visit her parents for the weekend. At first, Chris reads the family\'s overly accommodating behavior as nervous attempts to deal with their daughter\'s interracial relationship, but as the weekend progresses, a series of increasingly disturbing discoveries lead him to a truth that he never could have imagined.'),
+(3, 'ENG', 'US', 'Musical', 'Following their win at the world championship, the now separated Bellas reunite for one last singing competition at an overseas USO tour, but face a group who uses both instruments and voices.'),
+(4, 'ENG', 'US', 'drama', 'In Texas, after the death of his mother, the unemployed oil and gas worker Toby Howard is losing his ranch to the Texas Midlands Bank. Toby is divorced from his wife who lives with their two sons. When his brother Tanner Howard is released from the prison, they team up to rob agencies of the Texas Midlands Bank to raise money to pay the loan so that Toby may leave the real estate to his sons.'),
+(5, 'ENG', 'US', 'action, drama', 'When Beth Emhoff (Gwyneth Paltrow) returns to Minnesota from a Hong Kong business trip, she attributes the malaise she feels to jet lag. However, two days later, Beth is dead, and doctors tell her shocked husband (Matt Damon) that they have no idea what killed her. Soon, many others start to exhibit the same symptoms, and a global pandemic explodes. Doctors try to contain the lethal microbe, but society begins to collapse as a blogger (Jude Law) fans the flames of paranoia.\r\n');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `keywords`
+-- Table structure for table `movie_keywords`
 --
 
-CREATE TABLE `keywords` (
-  `movie_id` int(11) NOT NULL,
-  `keyword` varchar(250) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `movie_keywords` (
+  `movie_id` int(6) NOT NULL,
+  `keyword` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `keywords`
+-- Dumping data for table `movie_keywords`
 --
 
-INSERT INTO `keywords` (`movie_id`, `keyword`) VALUES
-(1, 'cheerleader legs'),
-(1, 'south korea'),
-(62, 'Horror'),
-(19, 'Singing'),
-(971, 'texas'),
-(971, 'bank robber'),
-(971, 'brother brother relationship'),
-(971, 'armed robbery'),
-(971, 'bank robbery'),
-(1001, 'virus'),
-(1001, 'contagion'),
-(1001, 'infection'),
-(1001, 'outbreak'),
-(1001, 'epidemic'),
-(1001, 'outbreak'),
-(1001, 'cure');
-
+INSERT INTO `movie_keywords` (`movie_id`, `keyword`) VALUES
+(1, 'based on comic'),
+(1, 'evil clown'),
+(1, 'mental illness'),
+(1, 'nihilism'),
+(2, 'Sunken Place'),
+(3, 'Singing'),
+(4, 'armed robbery'),
+(4, 'bank robbery'),
+(4, 'brothers'),
+(4, 'texas'),
+(5, 'contagion'),
+(5, 'epidemic'),
+(5, 'infection'),
+(5, 'outbreak'),
+(5, 'virus');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `list_movies`
+-- Table structure for table `movie_media`
 --
 
-CREATE TABLE `list_movies` (
-  `movie_id` int(11) NOT NULL,
-  `native_name` varchar(250) NOT NULL,
-  `english_name` varchar(250) NOT NULL,
-  `year` year(4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `movie_media` (
+  `movie_media_id` int(6) NOT NULL,
+  `m_link` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `m_link_type` varchar(11) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'video, poster, image are three possible values.',
+  `movie_id` int(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `list_movies`
+-- Dumping data for table `movie_media`
 --
 
-INSERT INTO `list_movies` (`movie_id`, `native_name`, `english_name`, `year`) VALUES
-(1, 'Train To Busan', 'Train To Busan', 2016),
-(2, 'Avatar 2', 'Avatar 2', 2020),
-(3, 'Bad Boys for Life', 'Bad Boys for Life', 2018),
-(4, 'Iron Sky: The Coming Race', 'Iron Sky: The Coming Race', 2018),
-(5, 'Mary Shelley', 'Mary Shelley', 2018),
-(6, 'The Other Side of the Wind', 'The Other Side of the Wind', 2018),
-(7, 'Mobile Homes', 'Mobile Homes', 2018),
-(8, 'Pirates of the Caribbean: Dead Men Tell No Tales', 'Pirates of the Caribbean: Dead Men Tell No Tales', 2017),
-(9, 'Justice League', 'Justice League', 2017),
-(10, 'Thor: Ragnarok', 'Thor: Ragnarok', 2017),
-(11, 'Guardians of the Galaxy Vol. 2', 'Guardians of the Galaxy Vol. 2', 2017),
-(12, 'The King\'s Daughter', 'The King\'s Daughter', 2017),
-(13, 'Extinction Jurassic Predators 2017', 'Extinction: Nature Has Evolved', 2017),
-(14, 'For Here or to Go?', 'For Here or to Go?', 2017),
-(15, 'The Outcasts', 'The Outcasts', 2017),
-(16, 'Wonder Woman', 'Wonder Woman', 2017),
-(17, 'Sly Cooper', 'Sly Cooper', 2017),
-(18, 'The Circle', 'The Circle', 2017),
-(19, 'Pitch Perfect 3', 'Pitch Perfect 3', 2017),
-(20, 'The Master', 'The Master', 2017),
-(21, 'The Devil\'s Candy', 'The Devil\'s Candy', 2017),
-(22, 'Return to Return to Nuke \'Em High, aka Volume 2', 'Return to Return to Nuke \'Em High, aka Volume 2', 2017),
-(23, 'The Cheerleader Murders', 'The Cheerleader Murders', 2017),
-(24, 'Dean', 'Dean', 2017),
-(25, 'Leatherface', 'Leatherface', 2017),
-(26, '47 Meters Down', '47 Meters Down', 2017),
-(27, 'Porto', 'Porto', 2017),
-(28, 'Mamaboy', 'Mamaboy', 2017),
-(29, 'David Lynch: The Art Life', 'David Lynch: The Art Life', 2017),
-(30, 'The Promise', 'The Promise', 2017),
-(31, 'All Eyez on Me', 'All Eyez on Me', 2017),
-(32, 'Colossal', 'Colossal', 2017),
-(33, 'Voyage of Time: Life\'s Journey', 'Voyage of Time: Life\'s Journey', 2017),
-(34, 'London Town', 'London Town', 2017),
-(35, 'Brimstone', 'Brimstone', 2017),
-(36, 'The White King', 'The White King', 2017),
-(37, 'Risk', 'Risk', 2017),
-(38, 'Kiki', 'Kiki', 2017),
-(39, 'Shangri-La Suite', 'Shangri-La Suite', 2017),
-(40, 'The Space Between Us', 'The Space Between Us', 2017),
-(41, 'National Bird', 'National Bird', 2017),
-(42, 'I Am Not Your Negro', 'I Am Not Your Negro', 2017),
-(43, 'A Dog\'s Purpose', 'A Dog\'s Purpose', 2017),
-(44, 'Manifesto', 'Manifesto', 2017),
-(45, 'The Little Hours', 'The Little Hours', 2017),
-(46, 'Fist Fight', 'Fist Fight', 2017),
-(47, 'Sleepless', 'Sleepless', 2017),
-(48, 'A Cure for Wellness', 'A Cure for Wellness', 2017),
-(49, 'xXx: Return of Xander Cage', 'xXx: Return of Xander Cage', 2017),
-(50, 'The Bye Bye Man', 'The Bye Bye Man', 2017),
-(51, 'Prevenge', 'Prevenge', 2017),
-(52, 'The Lego Batman Movie', 'The Lego Batman Movie', 2017),
-(53, 'Death Race 2050', 'Death Race 2050', 2017),
-(54, 'Trespass Against Us', 'Trespass Against Us', 2017),
-(55, 'Claire in Motion', 'Claire in Motion', 2017),
-(56, 'Coin Heist', 'Coin Heist', 2017),
-(57, 'Rings', 'Rings', 2017),
-(58, 'Clinical', 'Clinical', 2017),
-(59, 'Jim Gaffigan: Cinco', 'Jim Gaffigan: Cinco', 2017),
-(60, 'The Crash', 'The Crash', 2017),
-(61, 'John Wick: Chapter 2', 'John Wick: Chapter 2', 2017),
-(62, 'Get Out', 'Get Out', 2017),
-(63, 'Logan', 'Logan', 2017),
-(64, 'Kong: Skull Island', 'Kong: Skull Island', 2017),
-(65, 'City of Tiny Lights', 'City of Tiny Lights', 2017),
-(66, 'T2 Trainspotting', 'T2 Trainspotting', 2017),
-(67, 'Science Fiction Volume One: The Osiris Child', 'Science Fiction Volume One: The Osiris Child', 2017),
-(68, 'Before I Fall', 'Before I Fall', 2017),
-(69, 'The Big Sick', 'The Big Sick', 2017),
-(70, 'Ingrid Goes West', 'Ingrid Goes West', 2017),
-(71, 'I Don\'t Feel at Home in This World Anymore', 'I Don\'t Feel at Home in This World Anymore', 2017),
-(72, 'King Arthur: Legend of the Sword', 'King Arthur: Legend of the Sword', 2017),
-(73, 'Beauty and the Beast', 'Beauty and the Beast', 2017),
-(74, 'Take the 10', 'Take the 10', 2017),
-(75, 'The Boss Baby', 'The Boss Baby', 2017),
-(76, 'Justice League Dark', 'Justice League Dark', 2017),
-(77, 'Call Me by Your Name', 'Call Me by Your Name', 2017),
-(78, 'iBoy', 'iBoy', 2017),
-(79, 'Catfight', 'Catfight', 2017),
-(80, 'A Ghost Story', 'A Ghost Story', 2017),
-(81, 'Ghost in the Shell', 'Ghost in the Shell', 2017),
-(82, 'Pork Pie', 'Pork Pie', 2017),
-(83, 'Bill Burr: Walk Your Way Out', 'Bill Burr: Walk Your Way Out', 2017),
-(84, 'XX', 'XX', 2017),
-(85, 'Fifty Shades Darker', 'Fifty Shades Darker', 2017),
-(86, 'Wilson', 'Wilson', 2017),
-(87, 'Don\'t Knock Twice', 'Don\'t Knock Twice', 2017),
-(88, 'The Ticket', 'The Ticket', 2017),
-(89, 'Lavender', 'Lavender', 2017),
-(90, 'Detour', 'Detour', 2017),
-(91, 'The Book of Love', 'The Book of Love', 2017),
-(92, 'Trumped: Inside the Greatest Political Upset of All Time', 'Trumped: Inside the Greatest Political Upset of All Time', 2017),
-(93, 'Hickey', 'Hickey', 2017),
-(94, 'Neal Brennan: 3 Mics', 'Neal Brennan: 3 Mics', 2017),
-(95, 'Michael Bolton\'s Big, Sexy Valentine\'s Day Special', 'Michael Bolton\'s Big, Sexy Valentine\'s Day Special', 2017),
-(96, 'Lost in Florence', 'Lost in Florence', 2017),
-(97, 'Bad Kids of Crestview Academy', 'Bad Kids of Crestview Academy', 2017),
-(98, 'Shepherds and Butchers', 'Shepherds and Butchers', 2017),
-(99, 'In Dubious Battle', 'In Dubious Battle', 2017),
-(100, 'Berlin Syndrome', 'Berlin Syndrome', 2017),
-(101, 'All This Panic', 'All This Panic', 2017),
-(102, 'Youth in Oregon', 'Youth in Oregon', 2017),
-(103, 'Song to Song', 'Song to Song', 2017),
-(104, 'To the Bone', 'To the Bone', 2017),
-(105, 'Girlfriend\'s Day', 'Girlfriend\'s Day', 2017),
-(106, 'American Fable', 'American Fable', 2017),
-(107, 'Katherine Ryan: In Trouble', 'Katherine Ryan: In Trouble', 2017),
-(108, 'God\'s Own Country', 'God\'s Own Country', 2017),
-(109, 'Hostages', 'Hostages', 2017),
-(110, 'Lovesong', 'Lovesong', 2017),
-(111, 'Jen Kirkman: Just Keep Livin\'', 'Jen Kirkman: Just Keep Livin\'', 2017),
-(112, 'Becoming Warren Buffett', 'Becoming Warren Buffett', 2017),
-(113, 'Everybody Loves Somebody', 'Everybody Loves Somebody', 2017),
-(114, 'Britney Ever After', 'Britney Ever After', 2017),
-(115, 'Nick Cannon: Stand Up, Don\'t Shoot', 'Nick Cannon: Stand Up, Don\'t Shoot', 2017),
-(116, 'Fair Haven', 'Fair Haven', 2017),
-(117, 'Oklahoma City', 'Oklahoma City', 2017),
-(118, 'The Glass Castle', 'The Glass Castle', 2017),
-(119, 'Fare', 'Fare', 2017),
-(120, 'Tom of Finland', 'Tom of Finland', 2017),
-(121, 'Deconstructing Sgt. Pepper\'s Lonely Hearts Club Band', 'Deconstructing Sgt. Pepper\'s Lonely Hearts Club Band', 2017),
-(122, 'Donald Cried', 'Donald Cried', 2017),
-(123, 'Zombie Pizza', 'Zombie Pizza', 2017),
-(124, 'Their Finest', 'Their Finest', 2017),
-(125, 'The Ottoman Lieutenant', 'The Ottoman Lieutenant', 2017),
-(126, 'Lady Macbeth', 'Lady Macbeth', 2017),
-(127, 'The Sense of an Ending', 'The Sense of an Ending', 2017),
-(128, 'Carrie Pilby', 'Carrie Pilby', 2017),
-(129, 'The Institute', 'The Institute', 2017),
-(130, 'The Shack', 'The Shack', 2017),
-(131, 'Life', 'Life', 2017),
-(132, 'The Raking', 'The Raking', 2017),
-(133, 'Sleight', 'Sleight', 2017),
-(134, 'Kurt Braunohler: Trust Me', 'Kurt Braunohler: Trust Me', 2017),
-(135, 'Buster\'s Mal Heart', 'Buster\'s Mal Heart', 2017),
-(136, 'Ghosts of Darkness', 'Ghosts of Darkness', 2017),
-(137, 'Power Rangers', 'Power Rangers', 2017),
-(138, 'Alien: Covenant', 'Alien: Covenant', 2017),
-(139, 'Free Fire', 'Free Fire', 2017),
-(140, 'Casting JonBenet', 'Casting JonBenet', 2017),
-(141, 'Amy Schumer: The Leather Special', 'Amy Schumer: The Leather Special', 2017),
-(142, 'The Dinner', 'The Dinner', 2017),
-(143, 'The Avenue', 'The Avenue', 2017),
-(144, 'Arsenal', 'Arsenal', 2017),
-(145, 'Jim Norton: Mouthful of Shame', 'Jim Norton: Mouthful of Shame', 2017),
-(146, 'From Straight A\'s to XXX', 'From Straight A\'s to XXX', 2017),
-(147, 'The Invisible Guardian', 'The Invisible Guardian', 2017),
-(148, 'Gemini', 'Gemini', 2017),
-(149, 'Trevor Noah: Afraid of the Dark', 'Trevor Noah: Afraid of the Dark', 2017),
-(150, 'Dave Chappelle: The Age of Spin', 'Dave Chappelle: The Age of Spin', 2017),
-(151, 'David Bowie: The Last Five Years', 'David Bowie: The Last Five Years', 2017),
-(152, 'The Evil Within', 'The Evil Within', 2017),
-(153, 'The Last Word', 'The Last Word', 2017),
-(154, 'CHiPS', 'CHiPS', 2017),
-(155, 'Table 19', 'Table 19', 2017),
-(156, 'Going in Style', 'Going in Style', 2017),
-(157, 'Bokeh', 'Bokeh', 2017),
-(158, 'Dave Chappelle: Deep in the Heart of Texas', 'Dave Chappelle: Deep in the Heart of Texas', 2017),
-(159, 'All Nighter', 'All Nighter', 2017),
-(160, 'Deidra & Laney Rob a Train', 'Deidra & Laney Rob a Train', 2017),
-(161, 'Carnage: Swallowing the Past', 'Carnage: Swallowing the Past', 2017),
-(162, 'The Most Hated Woman in America', 'The Most Hated Woman in America', 2017),
-(163, 'Bitter Harvest', 'Bitter Harvest', 2017),
-(164, 'Vengeance: A Love Story', 'Vengeance: A Love Story', 2017),
-(165, 'Middle Man', 'Middle Man', 2017),
-(166, 'Miles', 'Miles', 2017),
-(167, 'Smurfs: The Lost Village', 'Smurfs: The Lost Village', 2017),
-(168, 'The Discovery', 'The Discovery', 2017),
-(169, 'Viceroy\'s House', 'Viceroy\'s House', 2017),
-(170, 'The Zookeeper\'s Wife', 'The Zookeeper\'s Wife', 2017),
-(171, 'Female Fight Club', 'Female Fight Club', 2017),
-(172, 'Eloise', 'Eloise', 2017),
-(173, 'Gifted', 'Gifted', 2017),
-(174, 'Teen Titans: The Judas Contract', 'Teen Titans: The Judas Contract', 2017),
-(175, 'Louis C.K. 2017', 'Louis C.K. 2017', 2017),
-(176, 'Aftermath', 'Aftermath', 2017),
-(177, 'The Bigfoot Project', 'The Bigfoot Project', 2017),
-(178, 'The Case for Christ', 'The Case for Christ', 2017),
-(179, '1 Mile to You', '1 Mile to You', 2017),
-(180, 'Spark: A Space Tail', 'Spark: A Space Tail', 2017),
-(181, 'Everything, Everything', 'Everything, Everything', 2017),
-(182, 'Diary of a Wimpy Kid: The Long Haul', 'Diary of a Wimpy Kid: The Long Haul', 2017),
-(183, 'Baywatch', 'Baywatch', 2017),
-(184, 'Unforgettable', 'Unforgettable', 2017),
-(185, 'Snatched', 'Snatched', 2017),
-(186, 'The Mummy', 'The Mummy', 2017),
-(187, 'From a House on Willow Street', 'From a House on Willow Street', 2017),
-(188, 'The Fate of the Furious', 'The Fate of the Furious', 2017),
-(189, 'After Porn Ends 2', 'After Porn Ends 2', 2017),
-(190, 'Burning Sands', 'Burning Sands', 2017),
-(191, 'Teleios', 'Teleios', 2017),
-(192, 'Sandy Wexler', 'Sandy Wexler', 2017),
-(193, 'Extortion', 'Extortion', 2017),
-(194, 'Betting on Zero', 'Betting on Zero', 2017),
-(195, 'The Transfiguration', 'The Transfiguration', 2017),
-(196, 'Another Evil', 'Another Evil', 2017),
-(197, 'Win It All', 'Win It All', 2017),
-(198, 'Captain Underpants: The First Epic Movie', 'Captain Underpants: The First Epic Movie', 2017),
-(199, 'Band Aid', 'Band Aid', 2017),
-(200, 'It Comes at Night', 'It Comes at Night', 2017),
-(201, 'Megan Leavey', 'Megan Leavey', 2017),
-(202, 'My Cousin Rachel', 'My Cousin Rachel', 2017),
-(203, 'I Love You Both', 'I Love You Both', 2017),
-(204, '11:55', '11:55', 2017),
-(205, 'Cars 3', 'Cars 3', 2017),
-(206, 'Maudie', 'Maudie', 2017),
-(207, 'Mad Families', 'Mad Families', 2017),
-(208, 'The Marine 5: Battleground', 'The Marine 5: Battleground', 2017),
-(209, 'The Covenant', 'The Covenant', 2017),
-(210, 'Rufus 2', 'Rufus 2', 2017),
-(211, 'The Book of Henry', 'The Book of Henry', 2017),
-(212, 'The Hero', 'The Hero', 2017),
-(213, 'Citizen Jane: Battle for the City', 'Citizen Jane: Battle for the City', 2017),
-(214, 'The Wall', 'The Wall', 2017),
-(215, 'Diamond Cartel', 'Diamond Cartel', 2017),
-(216, 'Phoenix Forgotten', 'Phoenix Forgotten', 2017),
-(217, 'The Immortal Life of Henrietta Lacks', 'The Immortal Life of Henrietta Lacks', 2017),
-(218, 'Tommy\'s Honour', 'Tommy\'s Honour', 2017),
-(219, 'Handsome Devil', 'Handsome Devil', 2017),
-(220, 'Lowriders', 'Lowriders', 2017),
-(221, 'The Dark Tapes', 'The Dark Tapes', 2017),
-(222, 'Beyond Skyline', 'Beyond Skyline', 2017),
-(223, 'Punching Henry', 'Punching Henry', 2017),
-(224, 'How to Be a Latin Lover', 'How to Be a Latin Lover', 2017),
-(225, 'The Trip to Spain', 'The Trip to Spain', 2017),
-(226, 'Nobody Speak: Trials of the Free Press', 'Nobody Speak: Trials of the Free Press', 2017),
-(227, 'Brigsby Bear', 'Brigsby Bear', 2017),
-(228, 'Lucas Brothers: On Drugs', 'Lucas Brothers: On Drugs', 2017),
-(229, 'I Am Heath Ledger', 'I Am Heath Ledger', 2017),
-(230, 'Sand Castle', 'Sand Castle', 2017),
-(231, 'Moontrap: Target Earth', 'Moontrap: Target Earth', 2017),
-(232, 'Uncertain', 'Uncertain', 2017),
-(233, 'Unlocked', 'Unlocked', 2017),
-(234, 'Voice from the Stone', 'Voice from the Stone', 2017),
-(235, 'Small Crimes', 'Small Crimes', 2017),
-(236, 'A Few Less Men', 'A Few Less Men', 2017),
-(237, 'Bottom of the World', 'Bottom of the World', 2017),
-(238, 'Stratton', 'Stratton', 2017),
-(239, 'The Lovers', 'The Lovers', 2017),
-(240, 'Tomato Red', 'Tomato Red', 2017),
-(241, 'Taking Earth', 'Taking Earth', 2017),
-(242, 'Maria Bamford: Old Baby', 'Maria Bamford: Old Baby', 2017),
-(243, 'Norman: The Moderate Rise and Tragic Fall of a New York Fixer', 'Norman: The Moderate Rise and Tragic Fall of a New York Fixer', 2017),
-(244, 'Seizure', 'Seizure', 2017),
-(245, 'Amityville: The Awakening', 'Amityville: The Awakening', 2017),
-(246, 'The Beguiled', 'The Beguiled', 2017),
-(247, 'The Reagan Show', 'The Reagan Show', 2017),
-(248, 'Baby Driver', 'Baby Driver', 2017),
-(249, 'Okja', 'Okja', 2017),
-(250, 'Asylum of Darkness', 'Asylum of Darkness', 2017),
-(251, 'Rough Night', 'Rough Night', 2017),
-(252, 'Mindhorn', 'Mindhorn', 2017),
-(253, 'Oasis', 'Oasis', 2017),
-(254, 'Generation Iron 2', 'Generation Iron 2', 2017),
-(255, 'The Shadow Effect', 'The Shadow Effect', 2017),
-(256, 'Monster High: Electrified', 'Monster High: Electrified', 2017),
-(257, 'Patti Cake$', 'Patti Cake$', 2017),
-(258, 'Moonlight in Vermont', 'Moonlight in Vermont', 2017),
-(259, 'Handsome: A Netflix Mystery Movie', 'Handsome: A Netflix Mystery Movie', 2017),
-(260, 'Batman & Bill', 'Batman & Bill', 2017),
-(261, 'The Axe Murders of Villisca', 'The Axe Murders of Villisca', 2017),
-(262, 'Permission', 'Permission', 2017),
-(263, 'The Hunter\'s Prayer', 'The Hunter\'s Prayer', 2017),
-(264, 'Beatriz at Dinner', 'Beatriz at Dinner', 2017),
-(265, 'Get Me Roger Stone', 'Get Me Roger Stone', 2017),
-(266, 'Boone: The Bounty Hunter', 'Boone: The Bounty Hunter', 2017),
-(267, 'Despicable Me 3', 'Despicable Me 3', 2017),
-(268, 'The Levelling', 'The Levelling', 2017),
-(269, 'Tracktown', 'Tracktown', 2017),
-(270, 'King Charles III', 'King Charles III', 2017),
-(271, 'Mommy Dead and Dearest', 'Mommy Dead and Dearest', 2017),
-(272, 'Alcoholist', 'Alcoholist', 2017),
-(273, 'Tickling Giants', 'Tickling Giants', 2017),
-(274, 'Dead Awake', 'Dead Awake', 2017),
-(275, 'A Family Man', 'A Family Man', 2017),
-(276, 'The Wizard of Lies', 'The Wizard of Lies', 2017),
-(277, 'Revengeance', 'Revengeance', 2017),
-(278, 'Kill \'em All', 'Kill \'em All', 2017),
-(279, 'Kill Switch', 'Kill Switch', 2017),
-(280, 'The Bad Batch', 'The Bad Batch', 2017),
-(281, 'Maigrets Night at the Crossroads', 'Maigrets Night at the Crossroads', 2017),
-(282, 'War for the Planet of the Apes', 'War for the Planet of the Apes', 2017),
-(283, 'Chronically Metropolitan', 'Chronically Metropolitan', 2017),
-(284, 'Kidnap', 'Kidnap', 2017),
-(285, 'How to Talk to Girls at Parties', 'How to Talk to Girls at Parties', 2017),
-(286, 'The Meyerowitz Stories', 'The Meyerowitz Stories', 2017),
-(287, 'War Machine', 'War Machine', 2017),
-(288, 'Becoming Bond', 'Becoming Bond', 2017),
-(289, 'Vir Das: Abroad Understanding', 'Vir Das: Abroad Understanding', 2017),
-(290, 'Norm Macdonald: Hitler\'s Dog, Gossip & Trickery', 'Norm Macdonald: Hitler\'s Dog, Gossip & Trickery', 2017),
-(291, 'Red Nose Day Actually', 'Red Nose Day Actually', 2017),
-(292, 'Whitney: Can I Be Me', 'Whitney: Can I Be Me', 2017),
-(293, 'Valerian and the City of a Thousand Planets', 'Valerian and the City of a Thousand Planets', 2017),
-(294, 'The Gracefield Incident', 'The Gracefield Incident', 2017),
-(295, 'Long Strange Trip', 'Long Strange Trip', 2017),
-(296, 'Warning: This Drug May Kill You', 'Warning: This Drug May Kill You', 2017),
-(297, 'The Mars Generation', 'The Mars Generation', 2017),
-(298, 'Hasan Minhaj: Homecoming King', 'Hasan Minhaj: Homecoming King', 2017),
-(299, 'Sarah Silverman: A Speck of Dust', 'Sarah Silverman: A Speck of Dust', 2017),
-(300, 'Breakdown Lane', 'Breakdown Lane', 2017),
-(301, 'Black Butterfly', 'Black Butterfly', 2017),
-(302, 'I Am Jane Doe', 'I Am Jane Doe', 2017),
-(303, 'Dumb: The Story of Big Brother Magazine', 'Dumb: The Story of Big Brother Magazine', 2017),
-(304, 'Sweet Virginia', 'Sweet Virginia', 2017),
-(305, 'The Farthest', 'The Farthest', 2017),
-(306, 'The Journey', 'The Journey', 2017),
-(307, 'McLaren', 'McLaren', 2017),
-(308, 'All About the Money', 'All About the Money', 2017),
-(309, 'Brain on Fire', 'Brain on Fire', 2017),
-(310, 'Drone', 'Drone', 2017),
-(311, 'Dragonheart: Battle for the Heartfire', 'Dragonheart: Battle for the Heartfire', 2017),
-(312, 'Stasis', 'Stasis', 2017),
-(313, 'Growing Up Smith', 'Growing Up Smith', 2017),
-(314, 'AWOL', 'AWOL', 2017),
-(315, 'Shimmer Lake', 'Shimmer Lake', 2017),
-(316, 'What Happened to Monday', 'What Happened to Monday', 2017),
-(317, 'The Son of Bigfoot', 'The Son of Bigfoot', 2017),
-(318, 'Atomic Blonde', 'Atomic Blonde', 2017),
-(319, 'Aaron\'s Blood', 'Aaron\'s Blood', 2017),
-(320, 'Saving Banksy', 'Saving Banksy', 2017),
-(321, 'The Exception', 'The Exception', 2017),
-(322, 'Goon: Last of the Enforcers', 'Goon: Last of the Enforcers', 2017),
-(323, 'Dunkirk', 'Dunkirk', 2017),
-(324, 'The Keepers', 'The Keepers', 2017),
-(325, 'The Summoning', 'The Summoning', 2017),
-(326, 'Once Upon a Time in Venice', 'Once Upon a Time in Venice', 2017),
-(327, 'Resurrecting Hassan', 'Resurrecting Hassan', 2017),
-(328, 'The Putin Interviews', 'The Putin Interviews', 2017),
-(329, 'An Inconvenient Sequel: Truth to Power', 'An Inconvenient Sequel: Truth to Power', 2017),
-(330, 'Rakka', 'Rakka', 2017),
-(331, 'Jawbone', 'Jawbone', 2017),
-(332, 'A Gray State', 'A Gray State', 2017),
-(333, 'Altitude', 'Altitude', 2017),
-(334, 'Strong Island', 'Strong Island', 2017),
-(335, 'Cream', 'Cream', 2017),
-(336, 'Chasing Trane', 'Chasing Trane', 2017),
-(337, 'Abacus: Small Enough to Jail', 'Abacus: Small Enough to Jail', 2017),
-(338, 'Transformers: The Last Knight', 'Transformers: The Last Knight', 2017),
-(339, 'Churchill', 'Churchill', 2017),
-(340, 'Dina', 'Dina', 2017),
-(341, 'The Hatton Garden Job', 'The Hatton Garden Job', 2017),
-(342, 'Hampstead', 'Hampstead', 2017),
-(343, '1 Night', '1 Night', 2017),
-(344, 'Oh, Hello: On Broadway', 'Oh, Hello: On Broadway', 2017),
-(345, 'Site Unseen: An Emma Fielding Mystery', 'Site Unseen: An Emma Fielding Mystery', 2017),
-(346, 'Savageland', 'Savageland', 2017),
-(347, 'You Get Me', 'You Get Me', 2017),
-(348, 'Grey Lady', 'Grey Lady', 2017),
-(349, 'Good Time', 'Good Time', 2017),
-(350, 'Eat Local', 'Eat Locals', 2017),
-(351, 'Hell on Earth: The Fall of Syria and the Rise of ISIS', 'Hell on Earth: The Fall of Syria and the Rise of ISIS', 2017),
-(352, 'The House', 'The House', 2017),
-(353, 'Five Came Back', 'Five Came Back', 2017),
-(354, 'The Babymoon', 'The Babymoon', 2017),
-(355, 'Legion of Brothers', 'Legion of Brothers', 2017),
-(356, 'Chuck', 'Chuck', 2017),
-(357, '2:22', '2:22', 2017),
-(358, 'Addicted to Porn: Chasing the Cardboard Butterfly', 'Addicted to Porn: Chasing the Cardboard Butterfly', 2017),
-(359, 'Ripped', 'Ripped', 2017),
-(360, 'Firebase', 'Firebase', 2017),
-(361, 'Edith Walks', 'Edith Walks', 2017),
-(362, 'City of Ghosts', 'City of Ghosts', 2017),
-(363, 'Chasing Coral', 'Chasing Coral', 2017),
-(364, 'This Is Everything: Gigi Gorgeous', 'This Is Everything: Gigi Gorgeous', 2017),
-(365, '78/52', '78/52', 2017),
-(366, 'Water & Power: A California Heist', 'Water & Power: A California Heist', 2017),
-(367, 'What the Health', 'What the Health', 2017),
-(368, 'Joshua: Teenager vs. Superpower', 'Joshua: Teenager vs. Superpower', 2017),
-(369, 'Revolt', 'Revolt', 2017),
-(370, 'Hickok', 'Hickok', 2017),
-(371, 'Do You Take This Man', 'Do You Take This Man', 2017),
-(372, 'The Dark Tower', 'The Dark Tower', 2017),
-(373, 'Inconceivable', 'Inconceivable', 2017),
-(374, 'Security', 'Security', 2017),
-(375, 'Overdrive', 'Overdrive', 2017),
-(376, 'Speech & Debate', 'Speech & Debate', 2017),
-(377, 'Tour de Pharmacy', 'Tour de Pharmacy', 2017),
-(378, 'Dirty Dancing', 'Dirty Dancing', 2017),
-(379, 'Devil\'s Gate', 'Devil\'s Gate', 2017),
-(380, 'Abduction', 'Abduction', 2017),
-(381, 'Obit', 'Obit', 2017),
-(382, 'The Truth Is in the Stars', 'The Truth Is in the Stars', 2017),
-(383, 'The Emoji Movie', 'The Emoji Movie', 2017),
-(384, 'Bedeviled', 'Bedeviled', 2017),
-(385, 'The Saint', 'The Saint', 2017),
-(386, 'The Hippopotamus', 'The Hippopotamus', 2017),
-(387, 'Wind River', 'Wind River', 2017),
-(388, 'Rory Scovel Tries Stand-Up for the First Time', 'Rory Scovel Tries Stand-Up for the First Time', 2017),
-(389, 'Shot Caller', 'Shot Caller', 2017),
-(390, 'Mike Birbiglia: Thank God for Jokes', 'Mike Birbiglia: Thank God for Jokes', 2017),
-(391, 'Chris D\'Elia: Man on Fire', 'Chris D\'Elia: Man on Fire', 2017),
-(392, 'S.W.A.T.: Under Siege', 'S.W.A.T.: Under Siege', 2017),
-(393, 'First Round Down', 'First Round Down', 2017),
-(394, 'Zygote', 'Zygote', 2017),
-(395, 'Wish Upon', 'Wish Upon', 2017),
-(396, 'Girls Trip', 'Girls Trip', 2017),
-(397, 'Landline', 'Landline', 2017),
-(398, 'Detroit', 'Detroit', 2017),
-(399, 'Columbus', 'Columbus', 2017),
-(400, 'Fittest On Earth: A Decade Of Fitness', 'Fittest On Earth: A Decade Of Fitness', 2017),
-(401, 'Zero 3', 'Zero 3', 2017),
-(402, 'Feed', 'Feed', 2017),
-(403, 'The Girl from the Song', 'The Girl from the Song', 2017),
-(404, 'Selbstkritik eines bürgerlichen Hundes', 'Self-criticism of a Bourgeois Dog', 2017),
-(405, 'First Kill', 'First Kill', 2017),
-(406, 'LA 92', 'LA 92', 2017),
-(407, 'Descendants 2', 'Descendants 2', 2017),
-(408, 'Ivanka Trump- America\'s Real First Lady?', 'Ivanka Trump- America\'s Real First Lady?', 2017),
-(409, 'Chris Gethard: Career Suicide', 'Chris Gethard: Career Suicide', 2017),
-(410, 'Lou', 'Lou', 2017),
-(411, 'American Violence', 'American Violence', 2017),
-(412, 'LEGO DC Super Hero Girls: Brain Drain', 'LEGO DC Super Hero Girls: Brain Drain', 2017),
-(413, 'Take Me', 'Take Me', 2017),
-(414, 'The Incredible Jessica James', 'The Incredible Jessica James', 2017),
-(415, 'Can\'t Buy My Love', 'Can\'t Buy My Love', 2017),
-(416, 'Cop and a Half: New Recruit', 'Cop and a Half: New Recruit', 2017),
-(417, 'In a Heartbeat', 'In a Heartbeat', 2017),
-(418, 'Queerama', 'Queerama', 2017),
-(419, 'Punk\'s Dead: SLC Punk 2', 'Punk\'s Dead: SLC Punk 2', 2016),
-(420, 'Sound of Redemption: The Frank Morgan Story', 'Sound of Redemption: The Frank Morgan Story', 2016),
-(421, 'The Ghost and the Whale', 'The Ghost and the Whale', 2016),
-(422, 'Ben-Hur', 'Ben-Hur', 2016),
-(423, 'Warcraft', 'Warcraft', 2016),
-(424, 'Deadpool', 'Deadpool', 2016),
-(425, 'Captain America: Civil War', 'Captain America: Civil War', 2016),
-(426, 'Doctor Strange', 'Doctor Strange', 2016),
-(427, 'X-Men: Apocalypse', 'X-Men: Apocalypse', 2016),
-(428, 'Last Days in the Desert', 'Last Days in the Desert', 2016),
-(429, 'The Bronze', 'The Bronze', 2016),
-(430, 'Midnight Special', 'Midnight Special', 2016),
-(431, 'Bad Hurt', 'Bad Hurt', 2016),
-(432, 'One More Time', 'One More Time', 2016),
-(433, 'Allegiant', 'Allegiant', 2016),
-(434, 'Fantastic Beasts and Where to Find Them', 'Fantastic Beasts and Where to Find Them', 2016),
-(435, 'The Secret Life of Pets', 'The Secret Life of Pets', 2016),
-(436, 'Criminal', 'Criminal', 2016),
-(437, 'Suicide Squad', 'Suicide Squad', 2016),
-(438, 'Aurora', 'Aurora', 2016),
-(439, 'Independence Day: Resurgence', 'Independence Day: Resurgence', 2016),
-(440, 'Star Trek Beyond', 'Star Trek Beyond', 2016),
-(441, 'The Disappointments Room', 'The Disappointments Room', 2016),
-(442, 'Silent Retreat', 'Silent Retreat', 2016),
-(443, 'Batman v Superman: Dawn of Justice', 'Batman v Superman: Dawn of Justice', 2016),
-(444, 'The Jungle Book', 'The Jungle Book', 2016),
-(445, '13 Hours: The Secret Soldiers of Benghazi', '13 Hours: The Secret Soldiers of Benghazi', 2016),
-(446, 'Spectral', 'Spectral', 2016),
-(447, 'Sand Castles', 'Sand Castles', 2016),
-(448, 'Colonia', 'Colonia', 2016),
-(449, 'The Witch', 'The Witch', 2016),
-(450, '3 Generations', '3 Generations', 2016),
-(451, 'Swallows and Amazons', 'Swallows and Amazons', 2016),
-(452, 'Anesthesia', 'Anesthesia', 2016),
-(453, 'Green Room', 'Green Room', 2016),
-(454, 'Man Down', 'Man Down', 2016),
-(455, 'Demolition', 'Demolition', 2016),
-(456, 'Into the Forest', 'Into the Forest', 2016),
-(457, 'Intruders', 'Intruders', 2016),
-(458, 'Salt and Fire', 'Salt and Fire', 2016),
-(459, 'Silence', 'Silence', 2016),
-(460, 'Hail, Caesar!', 'Hail, Caesar!', 2016),
-(461, 'Creative Control', 'Creative Control', 2016),
-(462, 'A Month of Sundays', 'A Month of Sundays', 2016),
-(463, 'They Look Like People', 'They Look Like People', 2016),
-(464, 'Blue Mountain State: The Rise of Thadland', 'Blue Mountain State: The Rise of Thadland', 2016),
-(465, 'The 5th Wave', 'The 5th Wave', 2016),
-(466, 'Zoolander 2', 'Zoolander 2', 2016),
-(467, 'How to Be Single', 'How to Be Single', 2016),
-(468, 'Fifty Shades of Black', 'Fifty Shades of Black', 2016),
-(469, 'Unlocking the Cage', 'Unlocking the Cage', 2016),
-(470, 'Nocturnal Animals', 'Nocturnal Animals', 2016),
-(471, 'Kung Fu Panda 3', 'Kung Fu Panda 3', 2016),
-(472, 'Krisha', 'Krisha', 2016),
-(473, 'Standoff', 'Standoff', 2016),
-(474, 'Pride and Prejudice and Zombies', 'Pride and Prejudice and Zombies', 2016),
-(475, 'Jane Got a Gun', 'Jane Got a Gun', 2016),
-(476, 'The Forest', 'The Forest', 2016),
-(477, 'Diablo', 'Diablo', 2016),
-(478, 'Band of Robbers', 'Band of Robbers', 2016),
-(479, 'Aimy in a Cage', 'Aimy in a Cage', 2016),
-(480, 'Army Dog', 'Army Dog', 2016),
-(481, 'La corrispondenza', 'The Correspondence', 2016),
-(482, 'The Abandoned', 'The Abandoned', 2016),
-(483, 'The Lovers and the Despot', 'The Lovers and the Despot', 2016),
-(484, 'Michael Jackson\'s Journey from Motown to Off the Wall', 'Michael Jackson\'s Journey from Motown to Off the Wall', 2016),
-(485, 'Wiener-Dog', 'Wiener-Dog', 2016),
-(486, 'Norm of the North', 'Norm of the North', 2016),
-(487, 'Ride Along 2', 'Ride Along 2', 2016),
-(488, 'Maggie\'s Plan', 'Maggie\'s Plan', 2016),
-(489, 'Batman: Bad Blood', 'Batman: Bad Blood', 2016),
-(490, 'Eddie the Eagle', 'Eddie the Eagle', 2016),
-(491, 'Exposed', 'Exposed', 2016),
-(492, 'Martyrs', 'Martyrs', 2016),
-(493, 'Lo and Behold: Reveries of the Connected World', 'Lo and Behold: Reveries of the Connected World', 2016),
-(494, 'Kill Kane', 'Kill Kane', 2016),
-(495, 'Looking for Grace', 'Looking for Grace', 2016),
-(496, 'The Boy', 'The Boy', 2016),
-(497, 'Jeruzalem', 'Jeruzalem', 2016),
-(498, 'Lazer Team', 'Lazer Team', 2016),
-(499, 'Risen', 'Risen', 2016),
-(500, 'Holy Hell', 'Holy Hell', 2016),
-(501, 'The Eagle Huntress', 'The Eagle Huntress', 2016),
-(502, 'The Other Side of the Door', 'The Other Side of the Door', 2016),
-(503, 'Dirty Grandpa', 'Dirty Grandpa', 2016),
-(504, 'Toni Braxton: Unbreak My Heart', 'Toni Braxton: Unbreak My Heart', 2016),
-(505, 'The Finest Hours', 'The Finest Hours', 2016),
-(506, 'Arrowhead', 'Arrowhead', 2016),
-(507, 'The Birth of a Nation', 'The Birth of a Nation', 2016),
-(508, 'Me Before You', 'Me Before You', 2016),
-(509, 'Jarhead 3: The Siege', 'Jarhead 3: The Siege', 2016),
-(510, 'SOMM: Into the Bottle', 'SOMM: Into the Bottle', 2016),
-(511, 'Touched with Fire', 'Touched with Fire', 2016),
-(512, 'Space Cop', 'Space Cop', 2016),
-(513, 'Grease Live', 'Grease Live', 2016),
-(514, 'Pandemic', 'Pandemic', 2016),
-(515, 'Miles Ahead', 'Miles Ahead', 2016),
-(516, 'Crouching Tiger, Hidden Dragon: Sword of Destiny', 'Crouching Tiger, Hidden Dragon: Sword of Destiny', 2016),
-(517, 'Triple 9', 'Triple 9', 2016),
-(518, 'Gods of Egypt', 'Gods of Egypt', 2016),
-(519, 'Race', 'Race', 2016),
-(520, 'Providence', 'Providence', 2016),
-(521, 'Of Mind and Music', 'Of Mind and Music', 2016),
-(522, '10 Cloverfield Lane', '10 Cloverfield Lane', 2016),
-(523, 'London Has Fallen', 'London Has Fallen', 2016),
-(524, 'Zootopia', 'Zootopia', 2016),
-(525, 'Whiskey Tango Foxtrot', 'Whiskey Tango Foxtrot', 2016),
-(526, 'The Young Messiah', 'The Young Messiah', 2016),
-(527, 'The Perfect Match', 'The Perfect Match', 2016),
-(528, 'Grimsby', 'Grimsby', 2016),
-(529, 'Home Invasion', 'Home Invasion', 2016),
-(530, 'Misconduct', 'Misconduct', 2016),
-(531, 'Cabin Fever', 'Cabin Fever', 2016),
-(532, 'A Sunday Horse', 'A Sunday Horse', 2016),
-(533, 'Jim: The James Foley Story', 'Jim: The James Foley Story', 2016),
-(534, 'The Veil', 'The Veil', 2016),
-(535, 'Hunt for the Wilderpeople', 'Hunt for the Wilderpeople', 2016),
-(536, 'Boris Sans Béatrice', 'Boris Without Beatrice', 2016),
-(537, 'Hotel Dallas', 'Hotel Dallas', 2016),
-(538, 'Mammal', 'Mammal', 2016),
-(539, '4th Man Out', '4th Man Out', 2016),
-(540, 'The Last Man on the Moon', 'The Last Man on the Moon', 2016),
-(541, 'Dad\'s Army', 'Dad\'s Army', 2016),
-(542, 'Conspiracy Encounters', 'Conspiracy Encounters', 2016),
-(543, 'Becoming Mike Nichols', 'Becoming Mike Nichols', 2016),
-(544, 'Homegrown: The Counter-Terror Dilemma', 'Homegrown: The Counter-Terror Dilemma', 2016),
-(545, '美人鱼', 'The Mermaid', 2016),
-(546, 'Emelie', 'Emelie', 2016),
-(547, 'Girl Asleep', 'Girl Asleep', 2016),
-(548, 'The Neon Demon', 'The Neon Demon', 2016),
-(549, 'Take Me to the River', 'Take Me to the River', 2016),
-(550, 'Hot Bot', 'Hot Bot', 2016),
-(551, 'Elvis & Nixon', 'Elvis & Nixon', 2016),
-(552, 'Mahana', 'Mahana', 2016),
-(553, 'Camino', 'Camino', 2016),
-(554, 'Road Games', 'Road Games', 2016),
-(555, 'Monster High: Great Scarrier Reef', 'Monster High Great Scarrier Reef', 2016),
-(556, 'You Are Not Alone', 'You Are Not Alone', 2016),
-(557, 'Yosemite', 'Yosemite', 2016),
-(558, 'Weaponized', 'Weaponized', 2016),
-(559, 'Mr. Right', 'Mr. Right', 2016),
-(560, 'Pee-wee\'s Big Holiday', 'Pee-wee\'s Big Holiday', 2016),
-(561, 'Miracles from Heaven', 'Miracles from Heaven', 2016),
-(562, 'The Confirmation', 'The Confirmation', 2016),
-(563, 'Under the Shadow', 'Under the Shadow', 2016),
-(564, 'Little Dead Rotting Hood', 'Little Dead Rotting Hood', 2016),
-(565, 'Florence Foster Jenkins', 'Florence Foster Jenkins', 2016),
-(566, 'My Big Fat Greek Wedding 2', 'My Big Fat Greek Wedding 2', 2016),
-(567, 'Hannibal Buress: Comedy Camisado', 'Hannibal Buress: Comedy Camisado', 2016),
-(568, 'Jimmy Carr: Funny Business', 'Jimmy Carr: Funny Business', 2016),
-(569, 'I Saw the Light', 'I Saw the Light', 2016),
-(570, 'Get a Job', 'Get a Job', 2016),
-(571, 'Keanu', 'Keanu', 2016),
-(572, 'White Girl', 'White Girl', 2016),
-(573, 'Yoga Hosers', 'Yoga Hosers', 2016),
-(574, 'War on Everyone', 'War on Everyone', 2016),
-(575, 'Love & Friendship', 'Love & Friendship', 2016),
-(576, 'Me Him Her', 'Me Him Her', 2016),
-(577, 'They\'re Watching', 'They\'re Watching', 2016),
-(578, 'Justice League vs. Teen Titans', 'Justice League vs. Teen Titans', 2016),
-(579, 'Ice Age: The Great Egg-Scapade', 'Ice Age: The Great Egg-Scapade', 2016),
-(580, 'Mapplethorpe: Look at the Pictures', 'Mapplethorpe: Look at the Pictures', 2016),
-(581, 'Zero Days', 'Zero Days', 2016),
-(582, 'Everybody Wants Some!!', 'Everybody Wants Some!!', 2016),
-(583, 'Sing Street', 'Sing Street', 2016),
-(584, 'The Unfolding', 'The Unfolding', 2016),
-(585, 'Paterson', 'Paterson', 2016),
-(586, 'The Huntsman: Winter\'s War', 'The Huntsman: Winter\'s War', 2016),
-(587, 'Neighbors 2: Sorority Rising', 'Neighbors 2: Sorority Rising', 2016),
-(588, 'A Good American', 'A Good American', 2016),
-(589, 'The Trust', 'The Trust', 2016),
-(590, 'Hush', 'Hush', 2016),
-(591, 'Confirmation', 'Confirmation', 2016),
-(592, 'The Good Neighbor', 'The Good Neighbor', 2016),
-(593, 'Too Late', 'Too Late', 2016),
-(594, 'City of Gold', 'City of Gold', 2016),
-(595, 'Uncaged', 'Uncaged', 2016),
-(596, 'Observance', 'Observance', 2016),
-(597, 'The Man Who Knew Infinity', 'The Man Who Knew Infinity', 2016),
-(598, 'Despite the Falling Snow', 'Despite the Falling Snow', 2016),
-(599, 'Folk Hero & Funny Guy', 'Folk Hero & Funny Guy', 2016),
-(600, 'Dreamland', 'Dreamland', 2016),
-(601, 'Stealing Cars', 'Stealing Cars', 2016),
-(602, 'Money Monster', 'Money Monster', 2016),
-(603, 'Nine Lives', 'Nine Lives', 2016),
-(604, 'Don\'t Think Twice', 'Don\'t Think Twice', 2016),
-(605, 'Barbershop: The Next Cut', 'Barbershop: The Next Cut', 2016),
-(606, 'The Preppie Connection', 'The Preppie Connection', 2016),
-(607, 'The Choice', 'The Choice', 2016),
-(608, 'Our Kind of Traitor', 'Our Kind of Traitor', 2016),
-(609, 'Hannibal Buress: Hannibal Takes Edinburgh', 'Hannibal Buress: Hannibal Takes Edinburgh', 2016),
-(610, 'Finding Dory', 'Finding Dory', 2016),
-(611, 'The Boss', 'The Boss', 2016),
-(612, 'Bastille Day', 'Bastille Day', 2016),
-(613, 'Smothered', 'Smothered', 2016),
-(614, 'Free State of Jones', 'Free State of Jones', 2016),
-(615, 'The Angry Birds Movie', 'The Angry Birds Movie', 2016),
-(616, 'Tickled', 'Tickled', 2016),
-(617, 'Ordinary World', 'Ordinary World', 2016),
-(618, 'Paradox', 'Paradox', 2016),
-(619, 'I Am Wrath', 'I Am Wrath', 2016),
-(620, 'Precious Cargo', 'Precious Cargo', 2016),
-(621, '11.22.63', '11.22.63', 2016),
-(622, 'Mother\'s Day', 'Mother\'s Day', 2016),
-(623, 'Mothers and Daughters', 'Mothers and Daughters', 2016),
-(624, 'Manhattan Night', 'Manhattan Night', 2016),
-(625, 'Snowden', 'Snowden', 2016),
-(626, 'Special Correspondents', 'Special Correspondents', 2016),
-(627, 'Sacrifice', 'Sacrifice', 2016),
-(628, 'Cheerleader', 'Cheerleader', 2016),
-(629, 'Buddymoon', 'Buddymoon', 2016),
-(630, 'Team Foxcatcher', 'Team Foxcatcher', 2016),
-(631, 'Patton Oswalt: Talking for Clapping', 'Patton Oswalt: Talking for Clapping', 2016),
-(632, 'Ratchet & Clank', 'Ratchet & Clank', 2016),
-(633, 'Holidays', 'Holidays', 2016),
-(634, 'Term Life', 'Term Life', 2016),
-(635, 'Kicking Off', 'Kicking Off', 2016),
-(636, 'A.R.C.H.I.E.', 'A.R.C.H.I.E.', 2016),
-(637, 'The Nice Guys', 'The Nice Guys', 2016),
-(638, 'Kindergarten Cop 2', 'Kindergarten Cop 2', 2016),
-(639, 'A Hologram for the King', 'A Hologram for the King', 2016),
-(640, 'The Family Fang', 'The Family Fang', 2016),
-(641, 'Restoration', 'Restoration', 2016),
-(642, 'Under the Gun', 'Under the Gun', 2016),
-(643, 'The Shallows', 'The Shallows', 2016),
-(644, 'The Offering', 'The Offering', 2016),
-(645, 'Alice Through the Looking Glass', 'Alice Through the Looking Glass', 2016),
-(646, 'Valentine Ever After', 'Valentine Ever After', 2016),
-(647, 'The BFG', 'The BFG', 2016),
-(648, 'My Scientology Movie', 'My Scientology Movie', 2016),
-(649, 'Sausage Party', 'Sausage Party', 2016),
-(650, 'Love by Chance', 'Love by Chance', 2016),
-(651, 'All Yours', 'All Yours', 2016),
-(652, 'The Bridge Part 2', 'The Bridge Part 2', 2016),
-(653, 'All Things Valentine', 'All Things Valentine', 2016),
-(654, 'Dater\'s Handbook', 'Dater\'s Handbook', 2016),
-(655, 'Unleashing Mr. Darcy', 'Unleashing Mr. Darcy', 2016),
-(656, 'Flower Shop Mystery: Mum\'s the Word', 'Flower Shop Mystery: Mum\'s the Word', 2016),
-(657, 'Love on the Sidelines', 'Love on the Sidelines', 2016),
-(658, 'Love\'s Complicated', 'Love\'s Complicated', 2016),
-(659, 'Love in Paradise', 'Love in Paradise', 2016),
-(660, 'Kill Command', 'Kill Command', 2016),
-(661, 'The Eyes of My Mother', 'The Eyes of My Mother', 2016),
-(662, 'Captain Fantastic', 'Captain Fantastic', 2016),
-(663, 'My Beautiful Broken Brain', 'My Beautiful Broken Brain', 2016),
-(664, 'The Midnight Man', 'The Midnight Man', 2016),
-(665, 'The Meddler', 'The Meddler', 2016),
-(666, 'Now You See Me 2', 'Now You See Me 2', 2016),
-(667, 'Southwest of Salem: The Story of the San Antonio Four', 'Southwest of Salem: The Story of the San Antonio Four', 2016),
-(668, 'The Apology', 'The Apology', 2016),
-(669, 'The Masked Saint', 'The Masked Saint', 2016),
-(670, 'The Curse of Sleeping Beauty', 'The Curse of Sleeping Beauty', 2016),
-(671, 'Highly Strung', 'Highly Strung', 2016),
-(672, 'The Land Before Time XIV: Journey of the Brave', 'The Land Before Time XIV: Journey of the Brave', 2016),
-(673, 'The Division: Agent Origins', 'The Division: Agent Origins', 2016),
-(674, 'Ali Wong: Baby Cobra', 'Ali Wong: Baby Cobra', 2016),
-(675, 'Café Society', 'Café Society', 2016),
-(676, 'I, Daniel Blake', 'I, Daniel Blake', 2016),
-(677, 'Beyond Sleep', 'Beyond Sleep', 2016),
-(678, 'Lamb', 'Lamb', 2016),
-(679, 'KISS: Rocks Vegas', 'KISS: Rocks Vegas', 2016),
-(680, 'Swiss Army Man', 'Swiss Army Man', 2016),
-(681, 'The Do-Over', 'The Do-Over', 2016),
-(682, 'Before I Wake', 'Before I Wake', 2016),
-(683, 'Zoombies', 'Zoombies', 2016),
-(684, 'Nothing Left Unsaid: Gloria Vanderbilt & Anderson Cooper', 'Nothing Left Unsaid: Gloria Vanderbilt & Anderson Cooper', 2016),
-(685, 'Chicken', 'Chicken', 2016),
-(686, 'Teenage Mutant Ninja Turtles: Out of the Shadows', 'Teenage Mutant Ninja Turtles: Out of the Shadows', 2016),
-(687, 'The Darkness', 'The Darkness', 2016),
-(688, 'The Fundamentals of Caring', 'The Fundamentals of Caring', 2016),
-(689, 'Brexit: The Movie', 'Brexit: The Movie', 2016),
-(690, 'Popstar: Never Stop Never Stopping', 'Popstar: Never Stop Never Stopping', 2016),
-(691, 'A Midsummer Night\'s Dream', 'A Midsummer Night\'s Dream', 2016),
-(692, 'Dark Signal', 'Dark Signal', 2016),
-(693, 'Urge', 'Urge', 2016),
-(694, 'All the Way', 'All the Way', 2016),
-(695, 'Bo Burnham: Make Happy', 'Bo Burnham: Make Happy', 2016),
-(696, 'The Conjuring 2', 'The Conjuring 2', 2016),
-(697, 'Weiner', 'Weiner', 2016),
-(698, 'Never Back Down: No Surrender', 'Never Back Down: No Surrender', 2016),
-(699, 'Approaching the Unknown', 'Approaching the Unknown', 2016),
-(700, 'Pelé: Birth of a Legend', 'Pelé: Birth of a Legend', 2016),
-(701, 'Hard Sell', 'Hard Sell', 2016),
-(702, 'Ghostbusters', 'Ghostbusters', 2016),
-(703, 'Cell', 'Cell', 2016),
-(704, 'Gridlocked', 'Gridlocked', 2016),
-(705, 'Girl in Woods', 'Girl in Woods', 2016),
-(706, 'Complete Unknown', 'Complete Unknown', 2016),
-(707, 'The Asian Connection', 'The Asian Connection', 2016),
-(708, 'The Art of Organized Noize', 'The Art of Organized Noize', 2016),
-(709, 'Adam Green\'s Aladdin', 'Adam Green\'s Aladdin', 2016),
-(710, 'Be Somebody', 'Be Somebody', 2016),
-(711, 'Central Intelligence', 'Central Intelligence', 2016),
-(712, 'O.J.: Made in America', 'O.J.: Made in America', 2016),
-(713, 'Mother, May I Sleep with Danger?', 'Mother, May I Sleep with Danger?', 2016),
-(714, 'Roots', 'Roots', 2016),
-(715, 'We are Twisted Fucking Sister!', 'We are Twisted Fucking Sister!', 2016),
-(716, 'How to Let Go of the World and Love All the Things Climate Can\'t Change', 'How to Let Go of the World and Love All the Things Climate Can\'t Change', 2016),
-(717, 'Suited', 'Suited', 2016),
-(718, 'Genius', 'Genius', 2016),
-(719, 'Fantastic Lies', 'Fantastic Lies', 2016),
-(720, 'Dead Rising: Endgame', 'Dead Rising: Endgame', 2016),
-(721, 'Jason Bourne', 'Jason Bourne', 2016),
-(722, 'Adventures in Babysitting', 'Adventures in Babysitting', 2016),
-(723, 'Dead 7', 'Dead 7', 2016),
-(724, 'Adult Life Skills', 'Adult Life Skills', 2016),
-(725, 'De Palma', 'De Palma', 2016),
-(726, 'The Legend of Tarzan', 'The Legend of Tarzan', 2016),
-(727, 'The Purge: Election Year', 'The Purge: Election Year', 2016),
-(728, 'Mike and Dave Need Wedding Dates', 'Mike and Dave Need Wedding Dates', 2016),
-(729, 'Ice Age: Collision Course', 'Ice Age: Collision Course', 2016),
-(730, 'Lights Out', 'Lights Out', 2016),
-(731, 'Pete\'s Dragon', 'Pete\'s Dragon', 2016),
-(732, 'Mythica: The Iron Crown', 'Mythica: The Iron Crown', 2016),
-(733, 'The Duel', 'The Duel', 2016),
-(734, 'Boom Bust Boom', 'Boom Bust Boom', 2016),
-(735, 'Indignation', 'Indignation', 2016),
-(736, 'Goat', 'Goat', 2016),
-(737, 'Tallulah', 'Tallulah', 2016),
-(738, 'The ReZort', 'The ReZort', 2016),
-(739, 'The Phenom', 'The Phenom', 2016),
-(740, 'Marauders', 'Marauders', 2016),
-(741, 'Carnage Park', 'Carnage Park', 2016),
-(742, 'Absolutely Fabulous: The Movie', 'Absolutely Fabulous: The Movie', 2016),
-(743, 'Piper', 'Piper', 2016),
-(744, 'Fastball', 'Fastball', 2016),
-(745, 'The Adderall Diaries', 'The Adderall Diaries', 2016),
-(746, 'Traded', 'Traded', 2016),
-(747, 'Lifeline', 'Lifeline', 2016),
-(748, 'The Dog Lover', 'The Dog Lover', 2016),
-(749, 'Notes on Blindness', 'Notes on Blindness', 2016),
-(750, 'Satanic', 'Satanic', 2016),
-(751, 'Life, Animated', 'Life, Animated', 2016),
-(752, 'Eat that Question: Frank Zappa in His Own Words', 'Eat that Question: Frank Zappa in His Own Words', 2016),
-(753, 'Presenting Princess Shaw', 'Presenting Princess Shaw', 2016),
-(754, 'Fittest On Earth (The Story Of The 2015 Reebok CrossFit Games)', 'Fittest On Earth (The Story Of The 2015 Reebok CrossFit Games)', 2016),
-(755, 'Nerve', 'Nerve', 2016),
-(756, 'Code of Honor', 'Code of Honor', 2016),
-(757, 'Sully', 'Sully', 2016),
-(758, 'Jim Jefferies: Freedumb', 'Jim Jefferies: Freedumb', 2016),
-(759, 'Dirty Lies', 'Dirty Lies', 2016),
-(760, 'The Miki Howard Story', 'The Miki Howard Story', 2016),
-(761, 'Goldstone', 'Goldstone', 2016),
-(762, 'Countdown', 'Countdown', 2016),
-(763, 'Lake Eerie', 'Lake Eerie', 2016),
-(764, 'Fender Bender', 'Fender Bender', 2016),
-(765, 'The Infiltrator', 'The Infiltrator', 2016),
-(766, 'War Dogs', 'War Dogs', 2016),
-(767, 'Sunspring', 'Sunspring', 2016),
-(768, 'Mono', 'Mono', 2016),
-(769, 'Back in the Day', 'Back in the Day', 2016),
-(770, 'Undrafted', 'Undrafted', 2016),
-(771, 'Outlaws and Angels', 'Outlaws and Angels', 2016),
-(772, 'Brahman Naman', 'Brahman Naman', 2016),
-(773, 'A Beautiful Planet', 'A Beautiful Planet', 2016),
-(774, 'Daniel Tosh: People Pleaser', 'Daniel Tosh: People Pleaser', 2016),
-(775, 'Looking: The Movie', 'Looking: The Movie', 2016),
-(776, 'Emma\'s Chance', 'Emma\'s Chance', 2016),
-(777, 'The Prey', 'The Prey', 2016),
-(778, 'Cyborg X', 'Cyborg X', 2016),
-(779, 'Vigilante Diaries', 'Vigilante Diaries', 2016),
-(780, 'Ghostheads', 'Ghostheads', 2016),
-(781, 'Traders', 'Traders', 2016),
-(782, 'On the Brain', 'On the Brain', 2016),
-(783, 'Rebirth', 'Rebirth', 2016),
-(784, 'Dear Eleanor', 'Dear Eleanor', 2016),
-(785, 'I Am Belfast', 'I Am Belfast', 2016),
-(786, 'Tony Robbins: I Am Not Your Guru', 'Tony Robbins: I Am Not Your Guru', 2016),
-(787, 'Author: The JT LeRoy Story', 'Author: The JT LeRoy Story', 2016),
-(788, 'The Love Witch', 'The Love Witch', 2016),
-(789, 'Batman: The Killing Joke', 'Batman: The Killing Joke', 2016),
-(790, 'Bad Moms', 'Bad Moms', 2016),
-(791, 'Hell or High Water', 'Hell or High Water', 2016),
-(792, 'Southside with You', 'Southside with You', 2016),
-(793, 'Little Men', 'Little Men', 2016),
-(794, 'Meet the Blacks', 'Meet the Blacks', 2016),
-(795, 'Ghost Team', 'Ghost Team', 2016),
-(796, 'Don\'t Breathe', 'Don\'t Breathe', 2016),
-(797, 'The Death and Life of Otto Bloom', 'The Death and Life of Otto Bloom', 2016),
-(798, 'Scare Campaign', 'Scare Campaign', 2016),
-(799, 'Hillary\'s America: The Secret History of the Democratic Party', 'Hillary\'s America: The Secret History of the Democratic Party', 2016),
-(800, 'American Hostage', 'American Hostage', 2016),
-(801, 'River', 'River', 2016),
-(802, 'The Call Up', 'The Call Up', 2016),
-(803, 'Blood Moon', 'Blood Moon', 2016),
-(804, 'King Cobra', 'King Cobra', 2016),
-(805, 'The Wedding March', 'The Wedding March', 2016),
-(806, 'Sharknado 4: The 4th Awakens', 'Sharknado 4: The 4th Awakens', 2016),
-(807, 'Donald Trump\'s The Art of the Deal: The Movie', 'Donald Trump\'s The Art of the Deal: The Movie', 2016),
-(808, 'The Edge of Seventeen', 'The Edge of Seventeen', 2016),
-(809, 'Clinton Cash', 'Clinton Cash', 2016),
-(810, 'Poi E: The Story of Our Song', 'Poi E: The Story of Our Song', 2016),
-(811, 'Intruder', 'Intruder', 2016),
-(812, 'Anthropoid', 'Anthropoid', 2016),
-(813, 'Blood Father', 'Blood Father', 2016),
-(814, 'Joshy', 'Joshy', 2016),
-(815, 'Free to Run', 'Free to Run', 2016),
-(816, 'Anne of Green Gables', 'Anne of Green Gables', 2016),
-(817, 'Daylight\'s End', 'Daylight\'s End', 2016),
-(818, 'Unfriend', 'Friend Request', 2016),
-(819, 'Let\'s Be Evil', 'Let\'s Be Evil', 2016),
-(820, 'Five Nights in Maine', 'Five Nights in Maine', 2016),
-(821, 'Bazodee', 'Bazodee', 2016),
-(822, 'Edge of Winter', 'Edge of Winter', 2016),
-(823, 'Viral', 'Viral', 2016),
-(824, 'The Remains', 'The Remains', 2016),
-(825, 'Summer Camp', 'Summer Camp', 2016),
-(826, 'The Land', 'The Land', 2016),
-(827, 'Pete Johansson: You Might Also Enjoy Pete Johansson', 'Pete Johansson: You Might Also Enjoy Pete Johansson', 2016),
-(828, 'Worry Dolls', 'Worry Dolls', 2016),
-(829, 'ABCs of Death 2.5', 'ABCs of Death 2.5', 2016),
-(830, 'Mechanic: Resurrection', 'Mechanic: Resurrection', 2016),
-(831, 'Tom Segura: Mostly Stories', 'Tom Segura: Mostly Stories', 2016),
-(832, 'Antibirth', 'Antibirth', 2016),
-(833, 'The 9th Life of Louis Drax', 'The 9th Life of Louis Drax', 2016),
-(834, 'The Magnificent Seven', 'The Magnificent Seven', 2016),
-(835, 'Dwayne Perkins: Take Note', 'Dwayne Perkins: Take Note', 2016),
-(836, 'Sniper: Ghost Shooter', 'Sniper: Ghost Shooter', 2016),
-(837, 'The Chemist', 'Assassin X', 2016),
-(838, 'Beta Test', 'Beta Test', 2016),
-(839, 'Down the Deep, Dark Web', 'Down the Deep, Dark Web', 2016),
-(840, 'The Rack Pack', 'The Rack Pack', 2016),
-(841, 'Skiptrace', 'Skiptrace', 2016),
-(842, 'A Stand Up Guy', 'A Stand Up Guy', 2016),
-(843, 'Brian Posehn: Criminally Posehn', 'Brian Posehn: Criminally Posehn', 2016),
-(844, 'Moonlight', 'Moonlight', 2016),
-(845, 'The Bronx Bull', 'The Bronx Bull', 2016),
-(846, 'The Bandit', 'The Bandit', 2016),
-(847, 'The Childhood of a Leader', 'The Childhood of a Leader', 2016),
-(848, 'Masterminds', 'Masterminds', 2016),
-(849, 'Amateur Night', 'Amateur Night', 2016),
-(850, 'One More Time with Feeling', 'One More Time with Feeling', 2016),
-(851, 'Kubo and the Two Strings', 'Kubo and the Two Strings', 2016),
-(852, 'Bridget Jones\'s Baby', 'Bridget Jones\'s Baby', 2016),
-(853, 'The Light Between Oceans', 'The Light Between Oceans', 2016),
-(854, 'Morgan', 'Morgan', 2016),
-(855, 'Queen of Katwe', 'Queen of Katwe', 2016),
-(856, 'Deepwater Horizon', 'Deepwater Horizon', 2016),
-(857, 'Miss Peregrine\'s Home for Peculiar Children', 'Miss Peregrine\'s Home for Peculiar Children', 2016),
-(858, 'The Girl on the Train', 'The Girl on the Train', 2016),
-(859, 'Middle School: The Worst Years of My Life', 'Middle School: The Worst Years of My Life', 2016),
-(860, 'The Accountant', 'The Accountant', 2016),
-(861, 'Kevin Hart: What Now ?', 'Kevin Hart: What Now ?', 2016),
-(862, 'The American Side', 'The American Side', 2016),
-(863, 'High Strung', 'High Strung', 2016),
-(864, 'God\'s Not Dead 2', 'God\'s Not Dead 2', 2016),
-(865, 'The First Monday in May', 'The First Monday in May', 2016),
-(866, 'Lady Day at Emerson\'s Bar & Grill', 'Lady Day at Emerson\'s Bar & Grill', 2016),
-(867, 'A Quiet Passion', 'A Quiet Passion', 2016),
-(868, 'Chosen', 'Chosen', 2016),
-(869, 'The Whole Truth', 'The Whole Truth', 2016),
-(870, 'Sundown', 'Sundown', 2016),
-(871, 'American Honey', 'American Honey', 2016),
-(872, 'Deon Cole: Cole-Blooded Seminar', 'Deon Cole: Cole-Blooded Seminar', 2016),
-(873, 'Out of Love', 'Out of Love', 2016),
-(874, 'Imperium', 'Imperium', 2016),
-(875, 'Ranenyy Angel', 'The Wounded Angel', 2016),
-(876, 'David Brent: Life on the Road', 'David Brent: Life on the Road', 2016),
-(877, 'Vintage Tomorrows', 'Vintage Tomorrows', 2016),
-(878, 'I Am Not a Serial Killer', 'I Am Not a Serial Killer', 2016),
-(879, 'VHS Massacre: Cult Films and the Decline of Physical Media', 'VHS Massacre: Cult Films and the Decline of Physical Media', 2016),
-(880, 'Hands of Stone', 'Hands of Stone', 2016),
-(881, 'The Fits', 'The Fits', 2016),
-(882, 'Morris from America', 'Morris from America', 2016),
-(883, 'The Last Heist', 'The Last Heist', 2016),
-(884, 'Burning Bodhi', 'Burning Bodhi', 2016),
-(885, 'Sniper: Special Ops', 'Sniper: Special Ops', 2016),
-(886, 'Hard Target 2', 'Hard Target 2', 2016),
-(887, 'Cartels', 'Cartels', 2016),
-(888, 'Honey 3: Dare to Dance', 'Honey 3: Dare to Dance', 2016),
-(889, 'The Intervention', 'The Intervention', 2016),
-(890, 'The Sea of Trees', 'The Sea of Trees', 2016),
-(891, 'XOXO', 'XOXO', 2016),
-(892, 'Dan Soder: Not Special', 'Dan Soder: Not Special', 2016),
-(893, 'Forsaken', 'Forsaken', 2016),
-(894, 'The Architect', 'The Architect', 2016),
-(895, 'Natural Selection', 'Natural Selection', 2016),
-(896, 'Chasing Great', 'Chasing Great', 2016),
-(897, 'Jeff Foxworthy & Larry the Cable Guy: We\'ve Been Thinking', 'Jeff Foxworthy & Larry the Cable Guy: We\'ve Been Thinking', 2016),
-(898, 'Batman Unlimited: Mechs vs. Mutants', 'Batman Unlimited: Mechs vs. Mutants', 2016),
-(899, 'Bachelors', 'Bachelors', 2016),
-(900, 'Little Sister', 'Little Sister', 2016),
-(901, 'Certain Women', 'Certain Women', 2016),
-(902, 'I\'ll Sleep When I\'m Dead', 'I\'ll Sleep When I\'m Dead', 2016),
-(903, 'Gernika', 'Guernica', 2016),
-(904, 'Equity', 'Equity', 2016),
-(905, 'The Amityville Terror', 'The Amityville Terror', 2016),
-(906, 'Virtual Revolution', 'Virtual Revolution', 2016),
-(907, 'jazzy@32 (a true story)', 'jazzy@32 (a true story)', 2016),
-(908, 'Who\'s Driving Doug', 'Who\'s Driving Doug', 2016),
-(909, 'No Letting Go', 'No Letting Go', 2016),
-(910, 'Citizen Soldier', 'Citizen Soldier', 2016),
-(911, 'DC Super Hero Girls: Hero of the Year', 'DC Super Hero Girls: Hero of the Year', 2016),
-(912, 'Hacksaw Ridge', 'Hacksaw Ridge', 2016),
-(913, 'David Cross: Making America Great Again', 'David Cross: Making America Great Again', 2016),
-(914, 'Other People', 'Other People', 2016),
-(915, 'Mostly Ghostly 3: One Night in Doom House', 'Mostly Ghostly 3: One Night in Doom House', 2016),
-(916, 'City 40', 'City 40', 2016),
-(917, 'Rampage: President Down', 'Rampage: President Down', 2016),
-(918, 'For the Love of Spock', 'For the Love of Spock', 2016),
-(919, 'Los Punks: We Are All We Have', 'Los Punks: We Are All We Have', 2016),
-(920, 'Summer of 8', 'Summer of 8', 2016),
-(921, 'USS Indianapolis: Men of Courage', 'USS Indianapolis: Men of Courage', 2016),
-(922, 'Billy Lynn\'s Long Halftime Walk', 'Billy Lynn\'s Long Halftime Walk', 2016),
-(923, 'Blair Witch', 'Blair Witch', 2016),
-(924, 'Transpecos', 'Transpecos', 2016),
-(925, 'The Hollars', 'The Hollars', 2016),
-(926, 'The Beatles: Eight Days a Week - The Touring Years', 'The Beatles: Eight Days a Week - The Touring Years', 2016),
-(927, 'Kickboxer: Vengeance', 'Kickboxer: Vengeance', 2016),
-(928, 'Loving', 'Loving', 2016),
-(929, 'Miss Stevens', 'Miss Stevens', 2016),
-(930, 'Christine', 'Christine', 2016),
-(931, 'Silicon Cowboys', 'Silicon Cowboys', 2016),
-(932, '31', '31', 2016),
-(933, 'Comedy Central Roast of Rob Lowe', 'Comedy Central Roast of Rob Lowe', 2016),
-(934, 'ARQ', 'ARQ', 2016),
-(935, 'Prescription Thugs', 'Prescription Thugs', 2016),
-(936, 'Tell Me How I Die', 'Tell Me How I Die', 2016),
-(937, 'Burn Burn Burn', 'Burn Burn Burn', 2016),
-(938, 'Altamira', 'Finding Altamira', 2016),
-(939, 'Tower', 'Tower', 2016),
-(940, 'I.T.', 'I.T.', 2016),
-(941, 'The Neighbor', 'The Neighbor', 2016),
-(942, 'Nina', 'Nina', 2016),
-(943, 'The Curse of Robert the Doll', 'The Curse of Robert the Doll', 2016),
-(944, 'El Jeremías', 'Jeremy', 2016),
-(945, 'A Monster Calls', 'A Monster Calls', 2016),
-(946, 'Arrival', 'Arrival', 2016),
-(947, 'Traceroute', 'Traceroute', 2016),
-(948, 'Storks', 'Storks', 2016),
-(949, 'Maximum Ride', 'Maximum Ride', 2016),
-(950, 'Horace and Pete', 'Horace and Pete', 2016),
-(951, 'Audrie & Daisy', 'Audrie & Daisy', 2016),
-(952, 'Iliza Shlesinger: Confirmed Kills', 'Iliza Shlesinger: Confirmed Kills', 2016),
-(953, 'Level Up', 'Level Up', 2016),
-(954, 'The Girl with All the Gifts', 'The Girl with All the Gifts', 2016),
-(955, 'Abattoir', 'Abattoir', 2016);
-INSERT INTO `list_movies` (`movie_id`, `native_name`, `english_name`, `year`) VALUES
-(956, 'All Roads Lead to Rome', 'All Roads Lead to Rome', 2016),
-(957, 'Maigret Sets a Trap', 'Maigret Sets a Trap', 2016),
-(958, 'In-Lawfully Yours', 'In-Lawfully Yours', 2016),
-(959, 'Redistributors', 'Redistributors', 2016),
-(960, 'Crossing Point', 'Crossing Point', 2016),
-(961, 'The Night Stalker', 'The Night Stalker', 2016),
-(962, 'Amanda Knox', 'Amanda Knox', 2016),
-(963, 'All the Difference', 'All the Difference', 2016),
-(964, 'Interrogation', 'Interrogation', 2016),
-(965, 'My Name Is Emily', 'My Name Is Emily', 2016),
-(966, 'Gringo: The Dangerous Life of John McAfee', 'Gringo: The Dangerous Life of John McAfee', 2016),
-(967, 'Kicks', 'Kicks', 2016),
-(968, 'Operation Avalanche', 'Operation Avalanche', 2016),
-(969, 'Bleed', 'Bleed', 2016),
-(970, 'Dirty 30', 'Dirty 30', 2016),
-(971, 'Gimme Danger', 'Gimme Danger', 2016),
-(972, 'Mannerlaatta', 'Tectonic Plate', 2016),
-(973, 'The Magnitsky Act. - Behind the Scenes', 'The Magnitsky Act. - Behind the Scenes', 2016),
-(974, 'The Dwarvenaut', 'The Dwarvenaut', 2016),
-(975, 'Set the Thames on Fire', 'Set the Thames on Fire', 2016),
-(976, 'Murder, She Baked: A Deadly Recipe', 'Murder, She Baked: A Deadly Recipe', 2016),
-(977, 'Secret Summer', 'Secret Summer', 2016),
-(978, 'Signed, Sealed, Delivered: From the Heart', 'Signed, Sealed, Delivered: From the Heart', 2016),
-(979, 'Ms. Matched', 'Ms. Matched', 2016),
-(980, 'My Summer Prince', 'My Summer Prince', 2016),
-(981, 'Signed, Sealed, Delivered: One in a Million', 'Signed, Sealed, Delivered: One in a Million', 2016),
-(982, 'Anything for Love', 'Anything for Love', 2016),
-(983, 'Appetite For Love', 'Appetite For Love', 2016),
-(984, 'Date with Love', 'Date with Love', 2016),
-(985, 'The Convenient Groom', 'The Convenient Groom', 2016),
-(986, 'Love Finds You in Valentine', 'Love Finds You in Valentine', 2016),
-(987, 'Raising the Bar', 'Raising the Bar', 2016),
-(988, 'Signed, Sealed, Delivered: Lost Without You', 'Signed, Sealed, Delivered: Lost Without You', 2016),
-(989, 'The Alchemist Cookbook', 'The Alchemist Cookbook', 2016),
-(990, 'Do Not Resist', 'Do Not Resist', 2016),
-(991, 'Murder, She Baked: A Peach Cobbler Mystery', 'Murder, She Baked: A Peach Cobbler Mystery', 2016),
-(992, 'A Cinderella Story: If the Shoe Fits', 'A Cinderella Story: If the Shoe Fits', 2016),
-(993, 'Blue Jay', 'Blue Jay', 2016),
-(994, 'La La Land', 'La La Land', 2016),
-(995, '13th', '13th', 2016),
-(996, 'The Siege of Jadotville', 'The Siege of Jadotville', 2016),
-(997, 'Vincent N Roxxy', 'Vincent N Roxxy', 2016),
-(998, 'Brother Nature', 'Brother Nature', 2016),
-(999, 'Barbie: Spy Squad', 'Barbie: Spy Squad', 2016),
-(1000, 'Allied', 'Allied', 2016),
-(1001, 'Contagion', 'Contagion', 2011);
+INSERT INTO `movie_media` (`movie_media_id`, `m_link`, `m_link_type`, `movie_id`) VALUES
+(1, 'joker_still1.jpg', 'still', 1),
+(2, 'https://www.youtube.com/watch?v=zAGVQLHvwOY', 'video', 1),
+(3, 'get_out.jpg', 'Poster', 2),
+(4, 'https://www.youtube.com/watch?v=Hihto8onbUU', 'Trailer', 3),
+(5, 'hell_or_high_poster.jpg', 'poster', 4),
+(6, 'https://www.youtube.com/watch?v=JQoqsKoJVDw', 'video', 4),
+(7, 'pitch_perfect_3_poster.jpg', 'poster', 3),
+(8, 'joker_poster.jpg', 'poster', 1),
+(9, 'https://rb.gy/v21usc', 'Poster', 5),
+(10, 'https://www.youtube.com/watch?v=4sYSyuuLk5g', 'Trailer', 5);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `movie_metadata`
+-- Table structure for table `movie_people`
 --
 
-CREATE TABLE `movie_metadata` (
-  `movie_id` int(11) NOT NULL,
-  `language` varchar(250) DEFAULT NULL,
-  `country` varchar(250) DEFAULT NULL,
-  `plot` varchar(1500) DEFAULT NULL,
-  `genre` varchar(250) DEFAULT NULL,
-  `trivia` varchar(1000) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `movie_people` (
+  `movie_id` int(6) NOT NULL,
+  `people_id` int(6) NOT NULL,
+  `role` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'director, producer, music director, lead actor, lead actress, supporting actor, supporting actress are possible values'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `movie_metadata`
+-- Dumping data for table `movie_people`
 --
 
-INSERT INTO `movie_metadata` (`movie_id`, `language`, `country`, `plot`, `genre`, `trivia`) VALUES
-(1, 'KOR', 'KR', 'Korean zombie movie. Go watch it.', 'Thriller', 'Train to Busan (2016) is the sixth highest grossing domestic film of all time in South Korea.'),
-(62, 'ENG', 'US', 'Chris and his girlfriend Rose go upstate to visit her parents for the weekend. At first, Chris reads the family\'s overly accommodating behavior as nervous attempts to deal with their daughter\'s interracial relationship, but as the weekend progresses, a series of increasingly disturbing discoveries lead him to a truth that he never could have imagined.', ' \'Mystery\',\'Thriller\',\'Horror\'', 'Chance the Rapper was so impressed by the movie that he bought all of the movie tickets from certain Chicago movie theaters just so people could go see the film for free. In one of his tweets talking about the film, he says, \"Just pull up with an ID and enjoy the movie.\"'),
-(19, 'ENG', 'US', 'Following their win at the world championship, the now separated Bellas reunite for one last singing competition at an overseas USO tour, but face a group who uses both instruments and voices.', 'Musical', 'During the shots of passports, Lilly\'s states her place of birth as Area 51, Nevada.'),
-(971, 'ENG', 'US', 'A divorced father and his ex-con older brother resort to a desperate scheme in order to save their family\'s ranch in West Texas.', 'Action', 'The phrase \"come hell or high water\" typically means \"do whatever needs to be done, no matter the circumstances\". It also refers to the \"hell or high water clause\" in a contract, usually a lease, which states that the payments must continue regardless of any difficulties the paying party may encounter. Both definitions apply to different parts of the plot in this movie.\r\n'),
-(1001, 'ENG', 'US', 'the wife returns from HongKong to Minnesota, she carries with her a virus and soon it becomes a global pandemic', 'thriller/drama', 'This movie\'s fictional MEV-1 virus is composed of bat and pig viral strains. Coincidentally, at the end of the film, a sample of this MEV-1 virus is stored with samples of H1N1 (which originated in pigs) and SARS (believed to have originated in bats). Kate Winslet filmed her role in 10 days.');
+INSERT INTO `movie_people` (`movie_id`, `people_id`, `role`) VALUES
+(1, 1, 'Lead Actor'),
+(1, 2, 'Supporting Actor'),
+(1, 3, 'Director'),
+(1, 4, 'Executive Producer'),
+(1, 5, 'Executive Producer'),
+(1, 6, 'Music Director'),
+(1, 7, 'Lead Actress'),
+(2, 9, 'Lead Actor'),
+(2, 10, 'Director'),
+(2, 11, 'Lead Actress'),
+(2, 12, 'Music Director'),
+(3, 14, 'Lead Actress'),
+(4, 15, 'Lead Actor'),
+(4, 16, 'Supporting Actor'),
+(4, 17, 'Director'),
+(4, 18, 'Executive Producer'),
+(4, 19, 'Music Director'),
+(4, 20, 'Lead Actress'),
+(5, 22, 'Director'),
+(5, 23, 'Music Director'),
+(5, 24, 'Lead Actor'),
+(5, 25, 'Lead Actress'),
+(5, 26, 'Producer');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `mulit_media`
+-- Table structure for table `movie_song`
 --
 
-CREATE TABLE `mulit_media` (
-  `movie_id` int(11) NOT NULL,
-  `movie_poster` varchar(50) DEFAULT NULL,
-  `photo_stills` varchar(50) DEFAULT NULL
+CREATE TABLE `movie_song` (
+  `movie_id` int(6) NOT NULL,
+  `song_id` int(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='This tables reflects an associative entity (movie,song)';
+
+--
+-- Dumping data for table `movie_song`
+--
+
+INSERT INTO `movie_song` (`movie_id`, `song_id`) VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `movie_trivia`
+--
+
+CREATE TABLE `movie_trivia` (
+  `movie_id` int(6) NOT NULL,
+  `trivia` varchar(750) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `mulit_media`
+-- Dumping data for table `movie_trivia`
 --
 
-INSERT INTO `mulit_media` (`movie_id`, `movie_poster`, `photo_stills`) VALUES
-(1, 'Train_to_Busan.jpg', NULL),
-(62, '/1SwAVYpuLj8KsHxllTF8Dt9dSSX.jpg', NULL),
-(971, '/6YOrNBdoXvT8aC5VPLkkN6t5z0V.jpg', NULL),
-(1001, 'rb.gy/v21usc', 'https://www.imdb.com/title/tt1598778/mediaindex');
+INSERT INTO `movie_trivia` (`movie_id`, `trivia`) VALUES
+(1, 'Joaquin Phoenix based his laugh on \"videos of people suffering from pathological laughter.\" He also sought to portray a character with which audiences could not identify.'),
+(1, 'The first R rated movie in history to make $1 billion worldwide.'),
+(2, 'Daniel Kaluuya was given the lead role on the spot after nailing his audition. Writer, co-producer, and director Jordan Peele said Kaluuya did about five takes of a key scene, in which his character needs to cry, and each was so perfect that the single tear came down at the exact same time for each take.'),
+(3, 'The music accompanying the Universal logo is sung a cappella'),
+(4, 'Parts were filmed in Portales, NM, 18 miles from Clovis, NM.'),
+(4, 'The film is dedicated to David John Mackenzie (1929-2015) and Ursula Sybil Mackenzie (1940-2015), the parents of director David Mackenzie. Both died while he was making this film.'),
+(5, 'Consultant Dr. Ian Lipkin--professor of epidemiology at Columbia University\'s Mailman School of Public Health--said that the virus in the film is one that he created. He based it on some traits of the Nipah virus from Malaysia in the late 1990s, which spread from pigs to farmers.'),
+(5, 'To promote this film, Warner Bros. Pictures Canada built two giant Petri dishes treated with bacteria and fungi and set them in a Toronto storefront window. Over several days, the bacteria and fungi specimens grew to spell out the name of the film and form biohazard symbols.\r\nInteresting');
 
 -- --------------------------------------------------------
 
@@ -1179,24 +226,48 @@ INSERT INTO `mulit_media` (`movie_id`, `movie_poster`, `photo_stills`) VALUES
 --
 
 CREATE TABLE `people` (
-  `movie_id` int(11) NOT NULL,
-  `director` varchar(150) NOT NULL,
-  `producer` varchar(150) NOT NULL,
-  `music_director` varchar(150) NOT NULL,
-  `lead_actor` varchar(150) NOT NULL,
-  `lead_actress` varchar(150) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `people_id` int(6) NOT NULL,
+  `screen_name` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Many people in the movie industry are known by short names',
+  `first_name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `middle_name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `gender` varchar(6) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image_name` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'We will store the images locally on the server; This field refers to the image file name'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `people`
 --
 
-INSERT INTO `people` (`movie_id`, `director`, `producer`, `music_director`, `lead_actor`, `lead_actress`) VALUES
-(1, 'Sang-ho Yeon', 'Woo-taek Kim', 'Young-gyu Jang', 'Gong Ji-Chul (Gong Yoo)', 'Yu-mi Jung'),
-(62, 'Jordan Peele', 'Jason Blum', 'Michael Abels', 'Daniel Kaluuya', 'Allison Williams'),
-(19, 'Trish Sie', 'Jason Moore', 'Julia Michels', 'John Lithgow', 'Anna Kendrick'),
-(971, 'David Mackenzie', 'Braden Aftergood', 'Nick Cave', 'Ben Foster', 'Dale Dickey'),
-(1001, 'Steven Soderbergh', 'Gregory Jacobs', 'Cliff Martinez', 'Matt Damon', 'Kate Winslet');
+INSERT INTO `people` (`people_id`, `screen_name`, `first_name`, `middle_name`, `last_name`, `gender`, `image_name`) VALUES
+(1, 'Joaquin Phoenix', 'Joaquin', 'Rafael', 'Bottom', 'Male', 'joaquin_phoenix.jpg'),
+(2, 'Robert De Niro', 'Robert', 'De', 'Niro', 'Male', 'robert_de_niro.jpg'),
+(3, 'Todd Phillips', 'Todd', '', 'Bunzl', 'Male', 'todd_philips.jpg'),
+(4, 'Richard Baratta', 'Richard', '', 'Baratta', 'Male', ''),
+(5, 'Bruce Berman', 'Bruce', '', 'Berman', 'Male', ''),
+(6, 'Hildur Guonadottir', 'Hildur', '', 'Guonadottir', 'Female', 'hildur_guonadottir.jpg'),
+(7, 'Zazie Beetz', 'Zazie', '', 'Beetz', 'Female', 'zazie_beetz.jpg'),
+(8, 'Frank Sinatra', 'Frank', 'Albert', 'Sinatra', 'Male', 'frank_sinatra.jpg'),
+(9, 'Daniel Kaluuya', 'Daniel', '', ' Kaluuya', 'Male', 'Daniel_Kaluuya.jpg'),
+(10, 'Allison Williams', 'Allison', '', 'Williams', 'Female', 'Allison_Williams.jpg'),
+(11, 'Jordan Peele', 'Jordan', '', 'Peele', 'Male', 'Jordan_Peele.jpg'),
+(12, 'Michael Abels', 'Michael', '', 'Abels', 'Male', 'Michael_Abels.jpg'),
+(13, 'Childish Gambino', 'Donald', '', 'Glover', 'Male', 'Donald_Glover.jpg'),
+(14, 'Anna Kendrick', 'Anna', '', 'Kendrick', 'Female', 'anna_kendrick.jpg'),
+(15, 'Chris Pine', 'Chris', '', 'Pine', 'Male', 'https://www.imdb.com/name/nm15'),
+(16, 'Ben Foster', 'Ben', '', 'Foster', 'Male', 'https://www.imdb.com/name/nm00'),
+(17, 'David Mackenzie', 'David', '', 'Mackenzie', 'Male', 'https://www.imdb.com/name/nm05'),
+(18, 'Braden Aftergood', 'Braden', '', 'Aftergood', 'Male', ''),
+(19, 'Nick Cave', 'Nick', '', 'Cave', 'Male', 'https://www.imdb.com/name/nm01'),
+(20, 'Katy Mixon', 'Katy', '', 'Mixon', 'Female', 'https://www.imdb.com/name/nm17'),
+(21, 'Jim Wolfe', 'Jim', '', 'Wolfe', 'Male', 'https://www.apmmusic.com/sites'),
+(22, 'Steven Soderbergh', 'Steven', '', 'Soderbergh', 'Male', 'https://rb.gy/r5c1fn'),
+(23, 'Cliff Martinez', 'Cliff', '', 'Martinez', 'Male', 'https://rb.gy/mecv56'),
+(24, 'Mitch Emhoff', 'Matt', '', 'Damon', 'Male', 'https://rb.gy/cpyye1'),
+(25, 'Dr. Erin Mears', 'Kate', '', 'Winslet', 'Female', 'https://rb.gy/ibqsdf'),
+(26, 'George Jacobs', 'Gregory', '', 'Jacobs', 'Male', 'https://rb.gy/i55ukk'),
+(27, 'Bono', 'Paul', 'David', 'Hewson', 'Male', 'https://rb.gy/1k3ims');
+
 -- --------------------------------------------------------
 
 --
@@ -1204,67 +275,143 @@ INSERT INTO `people` (`movie_id`, `director`, `producer`, `music_director`, `lea
 --
 
 CREATE TABLE `songs` (
-  `song_id` int(11) NOT NULL,
-  `movie_id` int(11) DEFAULT NULL,
-  `song_title` varchar(250) DEFAULT NULL,
-  `lyrics` varchar(1500) DEFAULT NULL,
-  `playback_singer` varchar(250) DEFAULT NULL,
-  `lyricist` varchar(250) DEFAULT NULL,
-  `audio_link` varchar(1000) DEFAULT NULL,
-  `video_link` varchar(1000) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `song_id` int(5) NOT NULL,
+  `title` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lyrics` varchar(6000) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `songs`
 --
 
-INSERT INTO `songs` (`song_id`, `movie_id`, `song_title`, `lyrics`, `playback_singer`, `lyricist`, `audio_link`, `video_link`) VALUES
-(1, 1, 'Aloha ʻOe', 'Haʻaheo e ka ua i nā pali	Proudly swept the rain by the cliffs\r\nKe nihi aʻela i ka nahele	As it glided through the trees\r\nE hahai (uhai) ana paha i ka liko	Still following ever the bud\r\nPua ʻāhihi lehua o uka	The ʻāhihi lehua[a] of the vale\r\nHui:	Chorus:\r\nAloha ʻoe, aloha ʻoe	Farewell to thee, farewell to thee\r\nE ke onaona noho i ka lipo	The charming one who dwells in the shaded bowers\r\nOne fond embrace,	One fond embrace,\r\nA hoʻi aʻe au	Ere I depart\r\nUntil we meet again	Until we meet again\r\nʻO ka haliʻa aloha i hiki mai	Sweet memories come back to me\r\nKe hone aʻe nei i	Bringing fresh remembrances\r\nKuʻu manawa	Of the past\r\nʻO ʻoe nō kuʻu ipo aloha	Dearest one, yes, you are mine own\r\nA loko e hana nei	From you, true love shall never depart\r\nTomago:	Refrain:\r\nMaopopo kuʻu ʻike i ka nani	I have seen and watched your loveliness\r\nNā pua rose o Maunawili	The sweet rose of Maunawili\r\nI laila hiaʻai nā manu	And \'tis there the birds of love dwell\r\nMikiʻala i ka nani o ka liko	And sip the honey from your lips\r\nHui	Chorus', NULL, 'Queen Liliʻuokalani', NULL, NULL),
-(2, 62, 'Redbone', 'Daylight\r\nI wake up feeling like you won\'t play right\r\nI used to know, but now that shit don\'t feel right\r\nIt made me put away my pride\r\nSo long\r\nYou made a nigga wait for some, so long\r\nYou make it hard for boy like that to go on\r\nI\'m wishing I could make this mine, oh\r\nIf you want it, yeah\r\nYou can have it, oh, oh, oh\r\nIf you need it, ooh\r\nWe can make it, oh\r\nIf you want it\r\nYou can have it\r\nBut stay woke\r\nNiggas creepin\'\r\nThey gon\' find you\r\nGon\' catch you sleepin\' (oh)\r\nNow stay woke\r\nNiggas creepin\'\r\nNow don\'t you close your eyes\r\nToo late\r\nYou wanna make it right, but now it\'s too late\r\nMy peanut butter chocolate cake with Kool-Aid\r\nI\'m trying not to waste my time\r\nIf you want it, oh\r\nYou can have it (you can have it)\r\nIf you need it (you better believe in something)\r\nWe can make it, oh\r\nIf you want it\r\nYou can have it, ah!\r\nBut stay woke (stay woke)\r\nNiggas creepin\' (they be creepin\')\r\nThey gon\' find you (they gon\' find you)\r\nGon\' catch you sleepin\' (gon\' catch you sleepin\', put your hands up on me)\r\nNow stay woke\r\nNiggas creepin\'\r\nNow don\'t you close your eyes\r\nBut stay woke (ooh, ah)\r\nNiggas creepin\'\r\nThey gon\' find you (they gon\' find you)\r\nGon\' catch you sleepin\' (gon\' catch you, gon\' catch you, ooh)\r\nNow stay woke\r\nNiggas creepin\'\r\nNow don\'t you close your eyes\r\nHow\'d it get so scandalous?\r\nOh, how\'d it get so scandalous?\r\nOh, oh, how\'d it get, how\'d it get\r\nHow\'d it get so scandalous?\r\nHow\'d it get so scandalous?\r\nHow\'d it get so scandalous?\r\nBut stay woke\r\nBut stay woke', NULL, 'Childish Gambino', 'https://www.youtube.com/watch?v=Kp7eSUU9oy8', 'https://www.youtube.com/watch?v=Kp7eSUU9oy8'),
-(3, 19, 'Toxic', 'Baby, can\'t you see\r\nI\'m calling\r\nA guy like you should wear a warning\r\nIt\'s dangerous\r\nI\'m falling\r\nThere\'s no escape\r\nI can\'t wait\r\nI need a hit\r\nBaby, give me it\r\nYou\'re dangerous\r\nI\'m loving it\r\nToo high\r\nCan\'t come down\r\nLosin\' my head\r\nSpinnin\' \'round and \'round\r\nDo you feel me now?\r\nOh,\r\nThe taste of your lips\r\nI\'m on a ride\r\nYou\'re toxic I\'m slippin\' under\r\nWith a taste of a poison paradise\r\nI\'m addicted to you\r\nDon\'t you know that you\'re toxic?\r\nAnd I love what you do\r\nDon\'t you know that you\'re toxic?\r\nIt\'s getting late\r\nTo give you up\r\nI took a sip\r\nFrom my devil\'s cup\r\nSlowly, it\'s taking over me\r\nToo high\r\nCan\'t come down\r\nIt\'s in the air and it\'s all around\r\nCan you feel me now?\r\nOh,\r\nTaste of your lips\r\nI\'m on a ride\r\nYou\'re toxic I\'m slippin\' under\r\nWith the taste of a poison paradise\r\nI\'m addicted to you\r\nDon\'t you know that you\'re toxic?\r\nAnd I love what you do\r\nDon\'t you know that you\'re toxic?\r\nDon\'t you know that you\'re toxic?\r\nTaste of your lips\r\nI\'m on a ride\r\nYou\'re toxic I\'m slippin\' under\r\nWith a taste of a poison paradise\r\nI\'m addicted to you\r\nDon\'t you know that you\'re toxic?\r\nWith the taste of your lips\r\nI\'m on a ride\r\nYou\'re toxic I\'m slippin\' under\r\nWith a taste of the poison paradise\r\nI\'m addicted to you\r\nDon\'t you know that you\'re toxic?\r\nIntoxicate me now\r\nWith your lovin\' now\r\nI think I\'m ready now\r\nI think I\'m ready now\r\nIntoxicate me now\r\nWith your lovin\' now\r\nI think I\'m ready no', NULL, 'Cathy Dennis', NULL, 'https://www.youtube.com/watch?v=LOZuxwVk7TU'),
-(4, 971, ' 1. Comancheria\r\n  2. Dollar Bill Blues\r\n  3. Mama\'s Room\r\n  4. Dust of the Chase\r\n  5. Texas Midlands\r\n  6. Robbery\r\n  7. You Ask Me To\r\n  8. Mountain Lion Mean\r\n  9. Sleeping On The Blacktop\r\n  10. From My Cold Dead Hands\r\n  11. Lord of the Plains\r', 'If I had a dollar bill\r\nYes, I believe, I surely will\r\nGo to town and drink my fill\r\nEarly in the morning\r\n\r\nLittle darling, she\'s a red-haired thing\r\nMan, she makes my legs to sing\r\nGoing to buy her a diamond ring\r\nEarly in the morning\r\nMother was a golden girl\r\nI slit her throat just to get her pearls\r\nCast myself into a whirl\r\nBefore a bunch of swine\r\nIt\'s a long way down the Harlan Road\r\nBusted back and a heavy load\r\nWon\'t get through to save my soul\r\nEarly in the morning\r\nI\'ve always been a gambling man\r\nI\'ve rolled them bones with either hand\r\nSeven is the promised land\r\nEarly in the morning\r\nWhiskey\'d be my dying bed\r\nTell me where to lay my head\r\nNot with me is all she said\r\nEarly in the morning', 'Nick Cave Warren Ellis', 'Nick Cave Warren Ellis', 'https://genius.com/Nick-cave-and-warren-ellis-comancheria-lyrics', 'https://www.youtube.com/watch?v=t1aVMl9LLsw'),
-(5, 1001, 'All I want is you', 'You say you want\r\nDiamonds on a ring of gold\r\nYou say you want\r\nYour story to remain untold\r\nBut all the promises we make\r\nFrom the cradle to the grave\r\nWhen all I want is you\r\nYou say you\'ll give me\r\nA highway with no one on it\r\nTreasure just to look upon it\r\nAll the riches in the night\r\nYou say you\'ll give me\r\nEyes in a moon of blindness\r\nA river in a time of dryness\r\nA harbor in the tempest\r\nBut all the promises we make\r\nFrom the cradle to the grave\r\nWhen all I want is you\r\nYou say you want\r\nYour love to work out right\r\nTo last with me through the night\r\nYou say you want\r\nDiamonds on a ring of gold\r\nYour story to remain untold\r\nYour love not to grow cold\r\nAll the promises we break\r\nFrom the cradle to the grave\r\nWhen all I want is you\r\nYou all I want is\r\nYou all I want is\r\nYou all I want is\r\nYou', 'U2', 'U2', 'https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiSlO7E6Z_qAhVGCM0KHam0ChoQwqsBMAJ6BAgLEAQ&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DKgJj13ZbbzY&usg=AOvVaw2wxwg9PXclOjhZu0K-bdCC', 'https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiSlO7E6Z_qAhVGCM0KHam0ChoQwqsBMAJ6BAgLEAQ&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DKgJj13ZbbzY&usg=AOvVaw2wxwg9PXclOjhZu0K-bdCC'),
-(6, 1001, 'Amante del Vino', 'N/A', 'Michael J Thomas', 'N/A', 'spotify:track:0zSZuKDSNAMJMVqvD2h3Y7', 'https://www.what-song.com/Movies/Soundtrack/858/Contagion#');
+INSERT INTO `songs` (`song_id`, `title`, `lyrics`) VALUES
+(1, 'Send In The Clowns', 'Isn\'t it rich?\r\nAre we a pair?\r\nMe here at last on the ground,\r\nYou in mid-air,\r\nWhere are the clowns?\r\nIsn\'t it bliss?\r\nDon\'t you approve?\r\nOne who keeps tearing around,\r\nOne who can\'t move,\r\nWhere are the clowns?\r\nThere ought to be clowns?\r\nJust when I\'d stopped opening doors,\r\nFinally knowing the one that I wanted was yours\r\nMaking my entrance again with my usual flair\r\nSure of my lines\r\nNo one is there\r\nDon\'t you love farce?\r\nMy fault, I fear\r\nI thought that you\'d want what I want\r\nSorry, my dear!\r\nBut where are the clowns\r\nSend in the clowns\r\nDon\'t bother, they\'re here\r\nIsn\'t it rich?\r\nIsn\'t it queer?\r\nLosing my timing this late in my career\r\nBut where are the clowns?\r\nThere ought to be clowns\r\nWell, maybe next year'),
+(2, 'Red Bone', 'Daylight\r\nI wake up feeling like you won\'t play right\r\nI used to know, but now that shit don\'t feel right\r\nIt made me put away my pride\r\nSo long\r\nYou made a nigga wait for some, so long\r\nYou make it hard for boy like that to go on\r\nI\'m wishing I could make this mine, oh\r\nIf you want it, yeah\r\nYou can have it, oh, oh, oh\r\nIf you need it, ooh\r\nWe can make it, oh\r\nIf you want it\r\nYou can have it\r\nBut stay woke\r\nNiggas creepin\'\r\nThey gon\' find you\r\nGon\' catch you sleepin\' (oh)\r\nNow stay woke\r\nNiggas creepin\'\r\nNow don\'t you close your eyes\r\nToo late\r\nYou wanna make it right, but now it\'s too late\r\nMy peanut butter chocolate cake with Kool-Aid\r\nI\'m trying not to waste my time\r\nIf you want it, oh\r\nYou can have it (you can have it)\r\nIf you need it (you better believe in something)\r\nWe can make it, oh\r\nIf you want it\r\nYou can have it, ah!\r\nBut stay woke (stay woke)\r\nNiggas creepin\' (they be creepin\')\r\nThey gon\' find you (they gon\' find you)\r\nGon\' catch you sleepin\' (gon\' catch you sleepin\', put your hands up on me)\r\nNow stay woke\r\nNiggas creepin\'\r\nNow don\'t you close your eyes\r\nBut stay woke (ooh, ah)\r\nNiggas creepin\'\r\nThey gon\' find you (they gon\' find you)\r\nGon\' catch you sleepin\' (gon\' catch you, gon\' catch you, ooh)\r\nNow stay woke\r\nNiggas creepin\'\r\nNow don\'t you close your eyes\r\nHow\'d it get so scandalous?\r\nOh, how\'d it get so scandalous?\r\nOh, oh, how\'d it get, how\'d it get\r\nHow\'d it get so scandalous?\r\nHow\'d it get so scandalous?\r\nHow\'d it get so scandalous?\r\nBut stay woke\r\nBut stay woke'),
+(3, 'Toxic', 'Baby, can’t you see\r\nI’m calling\r\nA guy like you\r\nShould wear a warning\r\nIt’s dangerous\r\nI’m fallin’\r\n\r\nThere’s no escape\r\nI can’t wait\r\nI need a hit\r\nBaby, give me it\r\nYou’re dangerous\r\nI’m lovin’ it\r\n\r\nToo high\r\nCan’t come down\r\nLosing my head\r\nSpinning ‘round and ‘round\r\nDo you feel me now?\r\n\r\nWith a taste of your lips I’m on a ride\r\nYou\'re toxic I\'m slipping under\r\nWith a taste of a poison paradise\r\nI’m addicted to you\r\nDon’t you know that you’re toxic\r\nAnd I love what you do\r\nDon’t you know that you’re toxic\r\n\r\nIt’s getting late\r\nTo give you up\r\nI took a sip\r\nFrom my devil\'s cup\r\nSlowly\r\nIt’s taking over me\r\n\r\nToo high\r\nCan’t come down\r\nIt’s in the air\r\nAnd it’s all around\r\nCan you feel me now\r\n\r\nWith a taste of your lips I’m on a ride\r\nYou\'re toxic I\'m slipping under\r\nWith a taste of a poison paradise\r\nI’m addicted to you\r\nDon’t you know that you’re toxic\r\nAnd I love what you do\r\nDon’t you know that you’re toxic\r\n\r\nDon\'t you know that you\'re toxic\r\n\r\n[x2]\r\nWith a taste of your lips I\'m on a ride\r\nYou\'re toxic I\'m slipping under\r\nWith a taste of a poison paradise\r\nI\'m addicted to you\r\nDon\'t you know that you\'re toxic\r\n\r\nIntoxicate me now\r\nWith your lovin\' now\r\nI think I\'m ready now\r\nI think I\'m ready now\r\nIntoxicate me now\r\nWith your lovin\' now\r\nI think I\'m ready now '),
+(4, 'Walkin\' Out The Door', 'I don\'t know where we belong\r\nOr if I could be this kind of strong\r\nI know that you say we were meant to be\r\nBut I don\'t know, I don\'t know, I don\'t know\r\nSo I\'m going to leave for a while (I\'m gonna leave for a while)\r\nLeave my head and let the miles say\r\nWhere I should go, where I should go, I\'m gonna go\r\nSo I need you not to need me, oh, this time around\r\nAnd I want you not to want me, would we have ever worked out\r\nAnd I can promise you one thing, that\'s for sure\r\nNo matter how many times you say you love me\r\nI\'ll still be walking out the door\r\nSo I\'ll pack my bags and be on my way (pack my bags and be on my way)\r\nSo please don\'t try and give me a reason to stay\r\nYou know I won\'t, I won\'t, oh no\r\nSo I need you not to need me, oh, this time around\r\nAnd I want you not…'),
+(5, 'All I Want is You', 'You say you want\r\nDiamonds on a ring of gold\r\nYou say you want\r\nYour story to remain untold\r\nBut all the promises we make\r\nFrom the cradle to the grave\r\nWhen all I want is you\r\nYou say you\'ll give me\r\nA highway with no one on it\r\nTreasure just to look upon it\r\nAll the riches in the night\r\nYou say you\'ll give me\r\nEyes in a moon of blindness\r\nA river in a time of dryness\r\nA harbor in the tempest\r\nBut all the promises we make\r\nFrom the cradle to the grave\r\nWhen all I want is you\r\nYou say you want\r\nYour love to work out right\r\nTo last with me through the night\r\nYou say you want\r\nDiamonds on a ring of gold\r\nYour story to remain untold\r\nYour love not to grow cold\r\nAll the promises we break\r\nFrom the cradle to the grave\r\nWhen all I want is you\r\nYou all I want is\r\nYou all I want is\r\nYou all I want is\r\nYou');
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `song_keywords`
+--
+
+CREATE TABLE `song_keywords` (
+  `song_id` int(5) NOT NULL,
+  `keyword` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `song_keywords`
+--
+
+INSERT INTO `song_keywords` (`song_id`, `keyword`) VALUES
+(1, 'fools'),
+(1, 'regret'),
+(2, 'Stay Woke'),
+(3, 'Brittany Spears'),
+(4, 'change'),
+(4, 'tragedy'),
+(5, 'diamonds'),
+(5, 'U2');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `song_media`
+--
+
+CREATE TABLE `song_media` (
+  `song_media_id` int(6) NOT NULL,
+  `s_link` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `s_link_type` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'audio and video are two possible values',
+  `song_id` int(6) NOT NULL COMMENT 'is the FK'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `song_media`
+--
+
+INSERT INTO `song_media` (`song_media_id`, `s_link`, `s_link_type`, `song_id`) VALUES
+(1, 'https://www.youtube.com/watch?v=WDaA_KFHeB4', 'video', 1),
+(2, 'https://youtu.be/Kp7eSUU9oy8', 'Video', 2),
+(3, 'https://www.youtube.com/watch?v=6hIjKViufzI', 'YouTube', 3),
+(4, 'https://www.youtube.com/watch?v=Hkt1yULpfRE', 'video', 4),
+(5, 'https://www.youtube.com/watch?v=KgJj13ZbbzY', 'Youtube', 5);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `song_people`
+--
+
+CREATE TABLE `song_people` (
+  `song_id` int(6) NOT NULL,
+  `people_id` int(6) NOT NULL,
+  `role` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `song_people`
+--
+
+INSERT INTO `song_people` (`song_id`, `people_id`, `role`) VALUES
+(1, 8, 'Singer'),
+(2, 13, 'Singer'),
+(3, 14, 'Singer'),
+(4, 21, 'Preformer');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `actor`
+-- Indexes for table `movies`
 --
-ALTER TABLE `actor`
-  ADD PRIMARY KEY (`actor_id`);
-
---
--- Indexes for table `actress`
---
-ALTER TABLE `actress`
-  ADD PRIMARY KEY (`actress_id`);
-
---
--- Indexes for table `list_movies`
---
-ALTER TABLE `list_movies`
+ALTER TABLE `movies`
   ADD PRIMARY KEY (`movie_id`);
 
 --
--- Indexes for table `movie_metadata`
+-- Indexes for table `movie_data`
 --
-ALTER TABLE `movie_metadata`
+ALTER TABLE `movie_data`
   ADD PRIMARY KEY (`movie_id`);
 
 --
--- Indexes for table `mulit_media`
+-- Indexes for table `movie_keywords`
 --
-ALTER TABLE `mulit_media`
-  ADD KEY `MovieID` (`movie_id`);
+ALTER TABLE `movie_keywords`
+  ADD PRIMARY KEY (`movie_id`,`keyword`);
+
+--
+-- Indexes for table `movie_media`
+--
+ALTER TABLE `movie_media`
+  ADD PRIMARY KEY (`movie_media_id`);
+
+--
+-- Indexes for table `movie_people`
+--
+ALTER TABLE `movie_people`
+  ADD PRIMARY KEY (`movie_id`,`people_id`,`role`);
+
+--
+-- Indexes for table `movie_song`
+--
+ALTER TABLE `movie_song`
+  ADD PRIMARY KEY (`movie_id`,`song_id`);
+
+--
+-- Indexes for table `movie_trivia`
+--
+ALTER TABLE `movie_trivia`
+  ADD PRIMARY KEY (`movie_id`,`trivia`);
 
 --
 -- Indexes for table `people`
 --
 ALTER TABLE `people`
-  ADD PRIMARY KEY (`movie_id`);
+  ADD PRIMARY KEY (`people_id`);
 
 --
 -- Indexes for table `songs`
@@ -1273,42 +420,42 @@ ALTER TABLE `songs`
   ADD PRIMARY KEY (`song_id`);
 
 --
+-- Indexes for table `song_keywords`
+--
+ALTER TABLE `song_keywords`
+  ADD PRIMARY KEY (`song_id`,`keyword`);
+
+--
+-- Indexes for table `song_media`
+--
+ALTER TABLE `song_media`
+  ADD PRIMARY KEY (`song_media_id`);
+
+--
+-- Indexes for table `song_people`
+--
+ALTER TABLE `song_people`
+  ADD PRIMARY KEY (`song_id`,`people_id`,`role`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `actor`
+-- AUTO_INCREMENT for table `movies`
 --
-ALTER TABLE `actor`
-  MODIFY `actor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `actress`
---
-ALTER TABLE `actress`
-  MODIFY `actress_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `list_movies`
---
-ALTER TABLE `list_movies`
-  MODIFY `movie_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1001;
-
---
--- AUTO_INCREMENT for table `songs`
---
-ALTER TABLE `songs`
-  MODIFY `song_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+ALTER TABLE `movies`
+  MODIFY `movie_id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `mulit_media`
+-- Constraints for table `movie_data`
 --
-ALTER TABLE `mulit_media`
-  ADD CONSTRAINT `MovieID` FOREIGN KEY (`movie_id`) REFERENCES `list_movies` (`movie_id`);
+ALTER TABLE `movie_data`
+  ADD CONSTRAINT `movie_data_ibfk_1` FOREIGN KEY (`movie_id`) REFERENCES `movies` (`movie_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
