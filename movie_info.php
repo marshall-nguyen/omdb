@@ -150,7 +150,7 @@ TODO: Copy the code snippet from A.1, change the code to reflect Extended data
 
     <?php
 
-    // query string for the Query A.1
+    // query string for the Query A.2
     $sql_A2 = "SELECT movie_data.movie_id, language, country, genre, plot 
               FROM movie_data
               INNER JOIN movies ON movies.movie_id = movie_data.movie_id
@@ -205,7 +205,7 @@ m_link_type
 
         <?php
 
-        // query string for the Query A.1
+        // query string for the Query A.3
         $sql_A3 = "SELECT movie_id, movie_media_id, m_link, m_link_type 
               FROM movie_media
               WHERE movie_id =" . $movie_id;
@@ -253,7 +253,25 @@ keywords (show it as a comma separated list)
 
     <?php
 
-    //TODO: 
+    // query string for the Query A.4
+    $sql_A4 = "SELECT movie_keywords.*,
+    GROUP_CONCAT(keyword SEPARATOR ', ') AS keyword_list
+    FROM movie_keywords
+    WHERE movie_id =" . $movie_id;
+
+    if (!$sql_A4_result = $db->query($sql_A4)) {
+    die('There was an error running query[' . $connection->error . ']');
+    }
+
+    if ($sql_A4_result->num_rows > 0) {
+      $a4_tuple = $sql_A4_result->fetch_assoc();
+      echo '<br> Keywords :  ' . $a4_tuple["keyword"];
+    } //end if
+    else {
+    echo "0 results";
+    } //end else
+
+    $sql_A4_result->close();
     ?>
   </div>
 </div>
