@@ -37,7 +37,9 @@ SELECT movies.*,
 
 /*Query 7.25 Create a relationship between a movie and a song
 Assigned to Benjamin Hanson*/
-/*TODO*/
+INSERT INTO songs VALUES ('9', 'so many tears', 'I shall not fear no man but God
+Though I walk thr...');
+INSERT INTO moive_song VALUES ('35','9');
 
 
 /*Query 7.26 Create a relation between a song and a people (including role)
@@ -61,4 +63,4 @@ UPDATE song_people SET song_id = '3', people_id = '28', role = 'backup singer' W
 
 /*Query 7.30 Delete a relation between a movie and a people (including role and screen name)
 Assigned to Isiah Taylor*/
-DELETE FROM movie_people WHERE movie _id = 1;
+DELETE FROM movie_people WHERE movie_id = 1;
